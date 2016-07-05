@@ -178,3 +178,69 @@
 
  $("#block").toggle(2000); 设置元素的可见性(如果当前不可见那么置为可见，如果可见设置为不可见)
    ```
+   ```
+   当页面html中存在两个id相同的元素时,我们通过元素选择器获得的是第一个元素,对元素添加事件的时候,也是只有第一个元素有效果
+
+    选中class="cur"的标签方法如下
+    $(".cur");
+    $(".nav-header .cur");
+    $("nav .cur");
+    $(".nav-header").find(".cur");  //在选中元素的基础上做查找
+
+    通过eq选中指定索引位置的元素
+    $(".nav-header li").eq(2);  //选中第三个li元素,eq选中指定索引位置(从0开始)的元素
+
+    选中class="nav-header"的标签的所有子集(即标签开始结束位置中间)
+    $(".section").children(); //选中的结果为nav标签
+    $(".section nav").children(); //选中ul所有内容和两个a标签的所有内容
+    $(".section nav").parent(); //返回父一级 选中section
+    $(".section nav").parents(); //返回所有的父级  避免使用此方法
+
+    //查找同一级的所有元素,不包含自己
+    //对对象进行后续操作是js中最常见的写法
+    $(".nav-header").find(".cur").siblings().css("color","red");
+
+    找到和自己同级的下一个元素  紧挨自己的
+    $(".nav-header").find(".cur").next().css("color","green");
+
+    pre查找紧挨自己的 上一个同级元素
+    $(".nav-header li").eq(3).prev().text("我是第三个元素")
+
+
+    查找同级的紧挨自己的后续元素
+    $(".nav-header").find(".cur").nextAll();
+
+    查找同级的紧挨自己的前面元素
+    $(".nav-header li").eq(3).prevAll().text("我是第四个元素前面的")
+
+    查找class="content"的元素,对元素做each循环操作
+    $(".content").each(function(){
+    设置当前div的color值为当前div中h3标签的color值
+     $(this).css("color",$(this).find("h3").css("color"));
+
+     添加多个css样式的写法
+      $(this).css({
+         "font-size":"24px",
+          "text-align":"center"
+      })
+
+    var text = $(this).find("h3").text(); //获取当前div中h3的文本内容
+    遍历div中的class="articles"的元素,进行循环赋值
+    $(this).find('.article-item').each(function(index){
+         $(this).text(text+(index+1));
+     })
+
+     $(".article-item").addClass('article-title'); 添加样式
+     $(".article-item").removeClass('article-title'); 删除样式
+
+     $(window).width();//获取窗口的宽
+     $(window).height();//获取窗口的高
+
+     监听窗口大小改变的事件
+     $(window).resize(function(){
+        console.log('window is changing size....');
+        console.log("width:"+$(window).width());
+        console.log("width:"+$(window).height());
+     })
+ 
+   ```
