@@ -244,3 +244,83 @@
      })
  
    ```
+   ```
+   js中使用最多的是获取content的width和height
+    log("[$]width",$(".box").width()); ////content的宽
+    log("[$]height",$(".box").height()); ////content的高
+
+    log("[$]outerWidth",$(".box").outerWidth()); ////content+padding+borderWidth
+    log("[$]outerHeight",$(".box").outerHeight());
+
+    log("[$]innerWidth",$(".box").innerWidth()); ////content+padding
+    log("[$]innerHeight",$(".box").innerHeight());
+
+    log("[js]clientWidth",document.querySelector(".box").clientWidth); /////content的宽+padding的距离
+    log("[js]clientHeight",document.querySelector(".box").clientHeight); ////content的高+padding的距离
+
+    log("[js]scrollWidth",document.querySelector(".box").scrollWidth); ////content的宽
+    log("[js]scrollHeight",document.querySelector(".box").scrollHeight); ////content的高
+
+    log("[js]offsetWidth",document.querySelector(".box").offsetWidth); ///content+padding+borderWidth
+   ```
+   ```
+    /*
+    odd表示奇数索引 
+    even表示偶数索引 
+    first表示第一个位置 
+    last表示最后一个位置
+    eq(1)表示第二个元素,参数为索引
+    lt(1)表示索引小于1的元素
+    gt(1)表示索引大于1的元素
+    更多方法参考：http://www.w3school.com.cn/jquery/jquery_ref_selectors.asp
+    */
+    $(".ul-1 li:gt(1)").css({
+        "color":"orange"
+    })
+
+
+    $(".ul-2") ////选中我的class="ul-2"的元素
+    .find("li") ////在我选中的class="ul-2"的元素的基础上做二次查找 朝朝li标签
+    $(".ul-2").find("li").eq(3) //////在我选择的元素中继续做查找
+    .filter('li) /////对我的查询结果做筛选
+    $(".ul-2 li").filter(".item-3").css("color","red")
+    $(".ul-2 li.item-3").css("color","blue")   等价于上面的filter
+
+    end  返回上一级 即返回当前选择器开始的状态
+    $(".ul-3 li.item-2").css("color","green");
+                +
+    $(".ul-3 li.item-4").css("color","red");  
+                 ||  
+    $(".ul-3 li.item-2").css("color","green").end().find(".ul-3 .item-4").css("color","red");
+
+    jQuery中的遍历操作会有很多 实际使用中最多的就是each
+    参考链接：http://www.w3school.com.cn/jquery/jquery_ref_traversing.asp
+   ```
+## ajax
+   ```
+   ajax请求最常用的一种写法
+        $.ajax({
+            url:"http://apis.baidu.com/apistore/mobilenumber/mobilenumber",  /////请求的地址 
+            headers:{ ///请求头
+                apikey:"6df030858631cb00d3a2ab0da6f013e1"
+            },
+            type:"get",    ////请求类型 post,get,delete...
+            //async:false, ////是否异步 true,false 默认是异步方式的
+            //data:{phone:"15000043945"}, /////传递的参数 
+            data:$("#form").serialize(), /////序列化表单的数据,使用url参数拼接的形式
+            dataType:"json", ////返回值的类型json,xml.text...
+            //timeout:20,////设置请求超时时间（毫秒）
+            beforeSend:function(){ ////在ajax请求提交之前调用
+                ///
+            },
+            success:function(res){ /////成功后的回调函数
+                console.log(res);
+                for(var key in res.retData){
+                    $("#"+key).text(res.retData[key]); ////数据解析赋值小技巧
+                }
+            },
+            error:function(err){ /////失败的回调函数
+                console.log(err);
+            }
+        });
+   ```
