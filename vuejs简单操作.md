@@ -2,7 +2,7 @@
 
 ###  Hello Word
 
-```
+```JavaScript
         <div id="app">
            {{message}}
         </div> 
@@ -18,7 +18,7 @@
  
 ### Two-way Binding(双向绑定)  
 
-```
+```JavaScript
     <div id="app">
        <p>{{message}}</p>
        <input v-model="message">
@@ -32,7 +32,7 @@
     })
 ```
 ### Render a List(渲染列表)
-```
+```JavaScript
    <div id="app">
       <ul>
          <li v-for="todo in todos">
@@ -55,7 +55,7 @@
 ```
 ### Handle User Input(用户输入处理)
 
-```
+```JavaScript
     //  输出结果变为倒叙输出(点击按钮后触发)
    <div id="app">
        <p>{{message}}</p>
