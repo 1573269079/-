@@ -105,7 +105,7 @@
 		}
 	style:
 		:style="[c]"
-		:style="[c,d]"   复合样式，采用驼峰命名法
+		:style="[c,d]" 注意:  复合样式，采用驼峰命名法
 		:style="json"
 	```
 	
@@ -918,5 +918,781 @@
 	    document.onclick=function(){
 	        vm.json.name='aaa';
 	    };
+	};
+	```
+	
+17. vue过渡（动画）
+	
+	```
+	本质走的css3: transtion ,animation
+	<div id="div1" v-show="bSign" transition="fade"></div>
+	动画:
+		.fade-transition{}
+		进入：
+		.fade-enter{
+			opacity: 0;
+		}
+		离开：
+		.fade-leave{
+			opacity: 0;
+			transform: translateX(200px);
+		}
+	```
+	```html
+		<-----------------1-------------------->
+		<div id="box">
+			<input type="button" value="按钮" @click="toggle"/>
+			<div id="div1" v-show="bSign" transition='fade'></div>
+		</div>
+		<script>
+			new Vue({
+				el:'#box',
+				data:{
+					bSign:true
+				},
+				methods:{
+					toggle:function(){
+						this.bSign =!this.bSign;
+					}
+				}
+			})
+		</script>
+		<-----------------2-------------------->
+		<div id="box">
+			<input type="button" value="按钮" @click="toggle">
+			<div id="div1" class="animated" v-show="bSign" transition="bounce"></div>
+		</div>
+		<script>
+			new Vue({
+				el:'#box',
+				data:{
+					bSign:true
+				},
+				methods:{
+					toggle(){
+						this.bSign=!this.bSign;
+					}
+				},
+				transitions:{ //定义所有动画名称
+					bounce:{
+						enterClass:'zoomInLeft',
+						leaveClass:'zoomOutRight'
+					}
+				}
+			});
+		</script>
+	```
+	
+18. 组件
+
+	```html
+	定义一个组件:
+	1. 全局组件
+	<div id="box">
+		<aaa></aaa>
+	</div>
+	<script>
+		var Aaa=Vue.extend({
+			template:'<h3>我是标题3</h3>'
+		});
+		Vue.component('aaa',Aaa);
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				bSign:true
+			}
+		});
+	</script>
+	*组件里面放数据:data必须是函数的形式，函数必须返回一个对象(json)
+	2. 局部组件
+	放到某个组件内部
+	<div id="box">
+		<my-aaa></my-aaa>
+	</div>
+	<script>
+		var Aaa=Vue.extend({
+			template:'<h3>{{msg}}</h3>',
+			data(){
+				return {
+					msg:'ddddd'
+				}
+			}
+		});
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				bSign:true
+			},
+			components:{ //局部组件
+				'my-aaa':Aaa
+			}
+		});
+	</script>
+	--------------------------------------
+	另一种编写方式:
+		<div id="box">
+			<other></other>
+		</div>
+		<script>
+			var vm = new Vue({
+				el:'#box',
+				components:{
+					'other':{
+						data(){
+							return {
+								msg:'other'
+							}
+						},
+						methods:{
+							change(){
+								this.msg = 'changed';
+							}
+						},
+						template:'<h1 @click="change">标题-->{{msg}}</h1>'
+					}
+				}
+			})
+		</script>
+	```
+	
+19. 模板
+
+	```html
+	1. template:'<h2 @click="change">标题2->{{msg}}</h2>'
+	2. 单独放到某个地方
+		a). <script type="x-template" id="aaa">
+				<h2 @click="change">标题2->{{msg}}</h2>
+			</script>
+		b). <template id="aaa">
+				<h1>标题1</h1>
+				<ul>
+					<li v-for="val in arr">
+						{{val}}
+					</li>
+				</ul>
+			</template>	
+	<div id="box">
+		<my-vuelen></my-vuelen>
+	</div>
+	<template id="app">
+		<h2 @click="change">标题->{{msg}}</h2>
+		<ul>
+			<li v-for="val in arr">{{val}}</li>
+		</ul>
+	</template>
+	<script>
+		var vm = new Vue({
+			el:'#box',
+			components:{
+				'my-vuelen':{
+					data(){
+						return {
+							msg:'my vue',
+							arr:['html','css','javascript','jquery']
+						}
+					},
+					methods:{
+						change(){
+							this.msg = 'changed';
+						}
+					},
+					template:'#app'
+				}
+			}
+		})
+	</script>
+	```
+	
+20. 动态组件:
+
+	```html
+	<component :is="组件名称"></component>
+	
+	<div id="box">
+		<input type="button" @click="a='first'" value="first组件">
+		<input type="button" @click="a='second'" value="second组件">
+		<component :is="a"></component>
+	</div>
+	<script>
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				a:'first'
+			},
+			components:{
+				'first':{
+					template:'<h2>我是first组件</h2>'
+				},
+				'second':{
+					template:'<h2>我是second组件</h2>'
+				}
+			}
+		});
+	</script>
+	```
+	
+21. 组件数据传递
+
+	```
+	1. 子组件就想获取父组件data
+	在调用子组件：<bbb :m="数据"></bbb>
+	子组件之内:
+		props:['m','myMsg']
+		props:{
+			'm':String,
+			'myMsg':Number
+		}
+	2. 父级获取子级数据
+	*子组件把自己的数据，发送到父级
+	vm.$emit(事件名,数据);
+	v-on:	@
+	
+	vm.$dispatch(事件名,数据)	子级向父级发送数据
+	vm.$broadcast(事件名,数据)	父级向子级广播数据
+	配合: event:{}
+	在vue2.0里面已经，报废了
+	```
+	
+	>eg
+	
+	```html
+	<---------------1------------------>
+	<div id="box">
+		<first></first>
+	</div>
+	<script>
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				a:'first'
+			},
+			components:{
+				'first':{
+					template:'<h2>我是first组件</h2><second></second>',
+					components:{
+						'second':{
+							template:'<h3>我是second组件</h3>'
+						}
+					}
+				}
+			}
+		});
+	</script>	
+	<---------------2------------------>
+	<div id="box">
+		<first></first>
+	</div>
+	<template id="first">
+		<h1>11111</h1>
+		<second :V="msg2"></second>
+	</template>
+	<script>
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				a:'first'
+			},
+			components:{
+				'first':{
+					data(){
+						return {
+							msg2:'我是父组件的数据'
+						}
+					},
+					template:'#first',
+					components:{
+						'second':{
+							props:['V'],
+							template:'<h3>我是second组件->{{V}}</h3>'
+						}
+					}
+				}
+			}
+		});
+	</script>
+	<---------------3------------------>
+	<div id="box">
+		<first></first>
+	</div>
+	<template id="first">
+		<h1>11111</h1>
+		<second :V="msg2" :my-msg="msg"></second>
+	</template>
+	<script>
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				a:'first'
+			},
+			components:{
+				'first':{
+					data(){
+						return {
+							msg:'test',
+							msg2:'我是父组件的数据'
+						}
+					},
+					template:'#first',
+					components:{
+						'second':{
+							props:['V','myMsg'],
+							template:'<h3>我是second组件->{{V}} <br> {{myMsg}}</h3>'
+						}
+					}
+				}
+			}
+		});
+	</script>
+	<---------------4------------------>
+	<div id="box">
+		<aaa></aaa>
+	</div>
+	<template id="aaa">
+		<span>我是父级 -> {{msg}}</span>
+		<bbb @child-msg="get"></bbb>
+	</template>
+	<template id="bbb">
+		<h3>子组件-</h3>
+		<input type="button" value="send" @click="send">
+	</template>
+	<script>
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				a:'aaa'
+			},
+			components:{
+				'aaa':{
+					data(){
+						return {
+							msg:111,
+							msg2:'我是父组件的数据'
+						}
+					},
+					template:'#aaa',
+					methods:{
+						get(msg){
+							this.msg=msg;
+						}
+					},
+					components:{
+						'bbb':{
+							data(){
+								return {
+									a:'我是子组件的数据'
+								}
+							},
+							template:'#bbb',
+							methods:{
+								send(){
+									this.$emit('child-msg',this.a);
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	</script>
+	```
+	
+22. slot:
+
+	```
+	位置、槽口
+	作用: 占个位置
+	类似ng里面 transclude  （指令）
+	```
+	```html
+	<div id="box">
+		<aaa>
+			<ul slot="ul-slot">
+				<li>1111</li>
+				<li>2222</li>
+				<li>3333</li>
+			</ul>
+			<ol slot="ol-slot">
+				<li>111</li>
+				<li>222</li>
+				<li>333</li>
+			</ol>
+		</aaa>
+		<hr>
+		<aaa></aaa>
+	</div>
+	<template id="aaa">
+		<h1>xxxx</h1>
+		<slot name="ol-slot">这是默认的情况</slot>
+		<p>welcome vue</p>
+		<slot name="ul-slot">这是默认的情况2</slot>
+	</template>
+	<script>
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				a:'aaa'
+			},
+			components:{
+				'aaa':{
+					template:'#aaa'
+				}
+			}
+		});
+	</script>
+	```
+	
+23. router
+
+	```
+	vue-> SPA应用，单页面应用(vue-router.js)
+	vue-resouce	交互
+	vue-router	路由     
+	根据不同url地址，出现不同效果
+
+	主页	home
+	新闻页	news
+	html:
+		<a v-link="{path:'/home'}">主页</a>	跳转链接
+		
+		展示内容:
+		<router-view></router-view>
+	js:
+		//1. 准备一个根组件
+		var App=Vue.extend();
+		//2. Home News组件都准备
+		var Home=Vue.extend({
+			template:'<h3>我是主页</h3>'
+		});
+		var News=Vue.extend({
+			template:'<h3>我是新闻</h3>'
+		});
+		//3. 准备路由
+		var router=new VueRouter();
+		//4. 关联
+		router.map({
+			'home':{
+				component:Home
+			},
+			'news':{
+				component:News
+			}
+		});
+		//5. 启动路由
+		router.start(App,'#box');
+	跳转:
+		router.redirect({
+			‘/’:'/home'
+		});
+	```
+	```html
+	<div id="box">
+		<ul>
+			<li>
+				<a v-link="{path:'/home'}">主页</a>
+			</li>
+			<li>
+				<a v-link="{path:'/news'}">新闻</a>
+			</li>
+		</ul>
+		<div>
+			<router-view></router-view>
+		</div>	
+	</div>
+	<script>
+		//1. 准备一个根组件
+		var App=Vue.extend();
+		//2. Home News组件都准备
+		var Home=Vue.extend({
+			template:'<h3>我是主页</h3>'
+		});
+		var News=Vue.extend({
+			template:'<h3>我是新闻</h3>'
+		});
+		//3. 准备路由
+		var router=new VueRouter();
+		//4. 关联
+		router.map({
+			'home':{
+				component:Home
+			},
+			'news':{
+				component:News
+			}
+		});
+		//5. 启动路由
+		router.start(App,'#box');
+		//6. 跳转
+		router.redirect({
+			'/':'home'
+		});
+	</script>
+	```
+	
+24. 多层路由
+
+	```
+	主页	home
+		登录	home/login
+		注册	home/reg
+	新闻页	news
+	subRoutes:{
+		'login':{
+			component:{
+				template:'<strong>我是登录信息</strong>'
+			}
+		},
+		'reg':{
+			component:{
+				template:'<strong>我是注册信息</strong>'
+			}
+		}
+	}
+	路由其他信息:
+	/detail/:id/age/:age
+	{{$route.params | json}}	->  当前参数
+	{{$route.path}}	->  当前路径
+	{{$route.query | json}}	->  数据
+	```
+	```html
+	<div id="box">
+		<ul>
+			<li>
+				<a v-link="{path:'/home'}">主页</a>
+			</li>
+			<li>
+				<a v-link="{path:'/news'}">新闻</a>
+			</li>
+		</ul>
+		<div>
+			<router-view></router-view>
+		</div>	
+	</div>
+	<template id="home">
+		<h3>我是主页</h3>
+		<div>
+			<a v-link="{path:'/home/login/zns'}">登录</a>
+			<a v-link="{path:'/home/reg/strive'}">注册</a>
+		</div>
+		<div>
+			<router-view></router-view>
+		</div>
+	</template>
+	<template id="news">
+		<h3>我是新闻</h3>
+		<div>
+			<a v-link="{path:'/news/detail/001'}">新闻001</a>
+			<a v-link="{path:'/news/detail/002'}">新闻002</a>
+		</div>
+		<router-view></router-view>
+	</template>
+	<template id="detail">
+		{{$route.params | json}}
+		<br>
+		{{$route.path}}
+		<br>
+		{{$route.query | json}}
+	</template>
+	<script>
+		//1. 准备一个根组件
+		var App=Vue.extend();
+		//2. Home News组件都准备
+		var Home=Vue.extend({
+			template:'#home'
+		});
+		var News=Vue.extend({
+			template:'#news'
+		});
+		var Detail=Vue.extend({
+			template:'#detail'
+		});
+		//3. 准备路由
+		var router=new VueRouter();
+		//4. 关联
+		router.map({
+			'home':{
+				component:Home,
+				subRoutes:{
+					'login/:name':{
+						component:{
+							template:'<strong>我是登录信息 {{$route.params | json}}</strong>'
+						}
+					},
+					'reg':{
+						component:{
+							template:'<strong>我是注册信息</strong>'
+						}
+					}
+				}
+			},
+			'news':{
+				component:News,
+				subRoutes:{
+					'/detail/:id':{
+						component:Detail
+					}
+				}
+			}
+		});
+		//5. 启动路由
+		router.start(App,'#box');
+		//6. 跳转
+		router.redirect({
+			'/':'home'
+		});
+	</script>
+	```
+	
+25. vue-loader
+
+	```
+	其他loader ->  css-loader、url-loader、html-loader.....
+	后台: nodeJs	->  require  exports
+	broserify  模块加载，只能加载js
+	webpack   模块加载器， 一切东西都是模块, 最后打包到一块了
+	require('style.css');	->   css-loader、style-loader
+	vue-loader基于webpack
+	.css
+	.js
+	.html
+	.php
+	
+	a.vue
+	b.vue
+	.vue文件:
+		放置的是vue组件代码
+		<template>
+			html
+		</template>
+		<style>
+			css
+		</style>
+		<script>
+			js	（平时代码、ES6）	babel-loader
+		</script>
+	简单的目录结构:
+		|-index.html
+		|-main.js	入口文件
+		|-App.vue	vue文件，官方推荐命名法
+		|-package.json	工程文件(项目依赖、名称、配置)
+			npm init --yes 生成
+		|-webpack.config.js	webpack配置文件
+	ES6: 模块化开发
+		导出模块：
+			export default {}
+		引入模块:
+			import 模块名 from 地址
+	webpak准备工作:
+		cnpm install webpack --save-dev
+		cnpm install webpack-dev-server --save-dev
+		App.vue	-> 变成正常代码		vue-loader@8.5.4
+		cnpm install vue-loader@8.5.4 --save-dev
+		cnpm install vue-html-loader --save-dev
+		vue-html-loader、css-loader、vue-style-loader、
+		vue-hot-reload-api@1.3.2
+		babel-loader
+		babel-core
+		babel-plugin-transform-runtime
+		babel-preset-es2015
+		babel-runtime	
+	```
+	
+	>eg
+	
+	```html
+	<---------App.vue----->
+	<template>
+		<h1>welcome Vue</h1>
+		<h2 @click="change">{{msg}}</h2>
+		<my-menu></my-menu>
+	</template>
+	<script>
+		import Menu from './components/Menu.vue'
+		export default{
+			data(){
+				return {
+					msg:'welcome Vue ^_^'
+				}
+			},
+			methods:{
+				change(){
+					this.msg='wahaha'
+				}
+			},
+			components:{
+				'my-menu':Menu
+			}	
+		}
+	</script>
+	<style>
+		body{
+			background: #ccc
+		}
+	</style>
+	<---------index.html----->
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+	</head>
+	<body>
+		<app></app>
+		<script src="build.js"></script>
+	</body>
+	</html>
+	<---------main.js----->
+	import Vue from 'vue'
+	import App from './App.vue'
+	new Vue({
+		el:'body',
+		components:{
+			app:App
+		}
+	});
+	<---------package.json----->
+	{
+	  "name": "vue-loader-demo",
+	  "version": "1.0.0",
+	  "description": "",
+	  "main": "main.js",
+	  "scripts": {
+	    "dev": "webpack-dev-server --inline --hot --port 8082"
+	  },
+	  "keywords": [],
+	  "author": "",
+	  "license": "ISC",
+	  "devDependencies": {
+	    "babel-core": "^6.17.0",
+	    "babel-loader": "^6.2.5",
+	    "babel-plugin-transform-runtime": "^6.15.0",
+	    "babel-preset-es2015": "^6.16.0",
+	    "babel-runtime": "^6.11.6",
+	    "css-loader": "^0.25.0",
+	    "vue-hot-reload-api": "^1.3.2",
+	    "vue-html-loader": "^1.2.3",
+	    "vue-loader": "^8.5.4",
+	    "vue-style-loader": "^1.0.0"
+	  },
+	  "dependencies": {
+	    "vue": "^1.0.28"
+	  }
+	}
+	<---------webpack.config.js----->
+	module.exports={
+		entry:'./main.js',
+		output:{
+			path:__dirname,
+			filename:'build.js'
+		},
+		module:{
+			loaders:[
+				{test:/\.vue$/, loader:'vue'},
+				{test:/\.js$/, loader:'babel', exclude:/node_modules/}
+			]
+		},
+		babel:{
+			presets:['es2015'],
+			plugins:['transform-runtime']
+		}
 	};
 	```
