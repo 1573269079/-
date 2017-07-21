@@ -265,6 +265,7 @@
     >函数的作用，可以写一次代码，然后反复地重用这个代码。
     
 	* 定义函数
+	
 	```
 	function  函数名( ){  函数体; }
 	```
@@ -326,10 +327,11 @@
 
 7. 事件
 
-	主要事件表：
+	> 主要事件表：
 	<img src="images/11.png"/>
 	
 	* 鼠标单击事件( onclick ）
+	
 	```html
 	//onclick是鼠标单击事件，当在网页上单击鼠标时，就会发生该事件。同时onclick事件调用的程序块就会被执行，通常与按钮一起使用。
 	//比如，我们单击按钮时，触发 onclick 事件，并调用两个数和的函数add2()。代码如下：
@@ -351,48 +353,298 @@
 	</body>
 	</html>
 	```
+	
 	* 鼠标经过事件（onmouseover）
+	
 	```html
 	//鼠标经过事件，当鼠标移到一个对象上时，该对象就触发onmouseover事件，并执行onmouseover事件调用的程序。
 	//现实鼠标经过"确定"按钮时，触发onmouseover事件，调用函数info():
 	<input name="确定" type="button" value="确定" onmouseover="info()"/>
 	```
+	
 	* 鼠标移开事件（onmouseout）
+	
 	```html
 	//鼠标移开事件，当鼠标移开当前对象时，执行onmouseout调用的程序。
 	//当把鼠标移动到"确定"按钮上，然后再移开时，触发onmouseout事件，调用函数message():
 	<input name="确定" type="button" value="确定" onmouseout="message()"/>
 	```
-	*光标聚焦事件（onfocus）
+	
+	* 光标聚焦事件（onfocus）
+	
 	```html
 	//当网页中的对象获得聚点时，执行onfocus调用的程序就会被执行。
 	//当将光标移到文本框内时，即焦点在文本框内，触发onfocus 事件，并调用函数message()。
 	<input type="text" onfocus="message()"/>
 	```
+	
 	* 失焦事件（onblur）
+	
 	```html
 	//onblur事件与onfocus是相对事件，当光标离开当前获得聚焦对象的时候，触发onblur事件，同时执行被调用的程序。
 	//在光标离开该文本框后（即失焦时），触发onblur事件，并调用函数message()。
 	<input type="text" onblur="message()"/>
 	```
+	
 	* 内容选中事件（onselect）
+	
 	```html
 	//选中事件，当文本框或者文本域中的文字被选中时，触发onselect事件，同时调用的程序就会被执行。
 	//当选中文本框内的文字时，触发onselect 事件，并调用函数message()。
-	<textarea name="summary" cols="60" rows="5" onselect="message()">请写入个人简介，不少于200字！</textarea>
+	
 	```
+	
 	* 文本框内容改变事件（onchange）
+	
 	```html
 	//通过改变文本框的内容来触发onchange事件，同时执行被调用的程序。
 	//当用户将文本框内的文字改变后，触发onchange事件。
-	<textarea name="summary" cols="60" rows="5"  onchange="message()">请写入个人简介，不少于200字！</textarea>
+	
 	```
+	
 	* 加载事件（onload）
+	
 	```
 	事件会在页面加载完成后，立即发生，同时执行被调用的程序。
 	注意：1. 加载页面时，触发onload事件，事件写在<body>标签内。
 	      2. 此节的加载页面，可理解为打开一个新页面时。
 	```
+
+8. JavaScript内置对象
+
+	```
+	JavaScript 中的所有事物都是对象，如:字符串、数值、数组、函数等，每个对象带有属性和方法。
+	对象的属性：反映该对象某些特定的性质的，如：字符串的长度、图像的长宽等；
+	对象的方法：能够在对象上执行的动作。例如，表单的“提交”(Submit)，时间的“获取”(getYear)等；
+	JavaScript 提供多个内建对象，比如 String、Date、Array 等等，使用对象前先定义
+	```
+	* Date 日期对象
+	```
+	定义一个时间对象 :
+	var Udate=new Date(); 
+	注意:使用关键字new，Date()的首字母必须大写。 
+	```
+	<img src="images/12.png"/>
+	
+	* 返回/设置年份方法
+	```javascript
+	//get/setFullYear() 返回/设置年份，用四位数表示。
+	var mydate=new Date();//当前时间2014年3月6日
+	document.write(mydate+"<br>");//输出当前时间
+	document.write(mydate.getFullYear()+"<br>");//输出当前年份
+	mydate.setFullYear(81); //设置年份
+	document.write(mydate+"<br>"); //输出年份被设定为 0081年。
+	```
+	* 返回星期方法
+	```javascript
+	//getDay() 返回星期，返回的是0-6的数字，0 表示星期天。如果要返回相对应“星期”，通过数组完成
+	<script type="text/javascript">
+	  var mydate=new Date();//定义日期对象
+	  var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];//定义数组对象,给每个数组项赋值
+	  var mynum=mydate.getDay();//返回值存储在变量mynum中
+	  document.write(mydate.getDay());//输出getDay()获取值
+	  document.write("今天是："+ weekday[mynum]);//输出星期几
+	</script>
+	```
+	* 返回/设置时间方法
+	```javascript
+	//get/setTime() 返回/设置时间，单位毫秒数，计算从 1970 年 1 月 1 日零时到日期对象所指的日期的毫秒数。
+	//如果将目前日期对象的时间推迟1小时，代码如下:
+	<script type="text/javascript">
+	  var mydate=new Date();
+	  document.write("当前时间："+mydate+"<br>");
+	  mydate.setTime(mydate.getTime() + 60 * 60 * 1000);
+	  document.write("推迟一小时时间：" + mydate);
+	</script>
+	```
+	* String 字符串对象
+	```javascript
+	//定义字符串
+	var mystr = "I love JavaScript!"
+	//定义mystr字符串后，我们就可以访问它的属性和方法。
+	//访问字符串对象的属性length:
+	stringObject.length; //返回该字符串的长度。
+	var mystr="Hello World!";
+	var myl=mystr.length;//myl 的值将是：12
+	//访问字符串对象的方法：
+	//使用 String 对象的 toUpperCase() 方法来将字符串小写字母转换为大写：
+	var mystr="Hello world!";
+	var mynum=mystr.toUpperCase();//mynum 的值是：HELLO WORLD!
+	```
+	* 返回指定位置的字符
+	```javascript
+	//charAt() 方法可返回指定位置的字符。返回的字符是长度为 1 的字符串。
+	//语法:
+	//stringObject.charAt(index)
+	//参数说明：
+	//index  --->  必需，表示字符串中某个位置的数字，即字符串中的下标
+	//注意：1.字符串中第一个字符的下标是 0。最后一个字符的下标为字符串长度减一（string.length-1）。
+	//      2.如果参数 index 不在 0 与 string.length-1 之间，该方法将返回一个空字符串。
+	//在字符串 "I love JavaScript!" 中，返回位置2的字符：
+	<script type="text/javascript">
+	  var mystr="I love JavaScript!"
+	  document.write(mystr.charAt(2));
+	</script>
+	//注意：一个空格也算一个字符。
+	```
+	* 返回指定的字符串首次出现的位置
+	```javascript
+	//indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+	/*
+	 * 语法:stringObject.indexOf(substring, startpos)
+	 * 说明：
+	 * 1.该方法将从头到尾地检索字符串 stringObject，看它是否含有子串 substring。
+	 * 2.可选参数，从stringObject的startpos位置开始查找substring，如果没有此参数将从stringObject的开始位置查找。
+	 * 3.如果找到一个 substring，则返回 substring 的第一次出现的位置。stringObject 中的字符位置是从 0 开始的。
+	 * 注意：1.indexOf() 方法区分大小写。
+	 *       2.如果要检索的字符串值没有出现，则该方法返回 -1。
+	 */
+	//例如: 对 "I love JavaScript!" 字符串内进行不同的检索：
+	<script type="text/javascript">
+	  var str="I love JavaScript!"
+	  document.write(str.indexOf("I") + "<br />");//0
+	  document.write(str.indexOf("v") + "<br />");//4
+	  document.write(str.indexOf("v",8));//9
+	</script>
+	```
+	* 字符串分割split()
+	```javascript
+	//split() 方法将字符串分割为字符串数组，并返回此数组。
+	//语法：stringObject.split(separator,limit)
+	/*  
+	 * 参数说明
+	 * separator   必需，从该参数指定的地方分割   stringObject
+	 * limit   可选参数，分割的次数，如设置该参数，返回的子串不会多于这个参数指定的数组，如无此参数则不限制次数
+	 */
+	//如果把空字符串 ("") 用作 separator，那么 stringObject 中的每个字符之间都会被分割。
+	var mystr = "www.imooc.com";
+	document.write(mystr.split(".")+"<br>");//www,imooc,com
+	document.write(mystr.split(".", 2)+"<br>");//www,imooc
+	```
+	* 提取字符串substring()
+	```javascript
+	//substring() 方法用于提取字符串中介于两个指定下标之间的字符。
+	//语法:stringObject.substring(startPos,stopPos) 
+	//参数说明:
+	//startPos  必需，一个非负的整数，开始位置
+	//stopPos   可选，一个非负的整数，结束位置，如果省略该参数，返回的子串会一直到字符串对象的结尾
+	/*
+	 * 1. 返回的内容是从 start开始(包含start位置的字符)到 stop-1 处的所有字符，其长度为 stop 减start。
+	 * 2. 如果参数 start 与 stop 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。
+	 * 3. 如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
+	 */
+	eg:
+	<script type="text/javascript">
+	  var mystr="I love JavaScript";
+	  document.write(mystr.substring(7));//JavaScript
+	  document.write(mystr.substring(2,6));//love
+	</script>
+	```
+	* 提取指定数目的字符substr()
+	```javascript
+	//substr() 方法从字符串中提取从 startPos位置开始的指定数目的字符串。
+	//语法:stringObject.substr(startPos,length)
+	/*
+	 * 参数说明 
+	 *  startPos   必需，要提取的子串的起始位置，必需是数值
+	 *  length     可选，提取字符串长度，如果省略，返回从stringObject的开始位置startPOS到stringObject的结尾的字符
+	 */
+	//注意：如果参数startPos是负数，从字符串的尾部开始算起的位置。也就是说，-1 指字符串中最后一个字符，-2 指倒数第二个字符，以此类推。
+	//如果startPos为负数且绝对值大于字符串长度，startPos为0。
+	<script type="text/javascript">
+	  var mystr="I love JavaScript!";
+	  document.write(mystr.substr(7)); //JavaScript!
+	  document.write(mystr.substr(2,4)); //love
+	</script>
+	```
+	* Math 对象
+	
+	<img src="images/14.png"/><img src="images/15.png"/>
+	
+	* 向上取整: ceil() 方法可对一个数进行向上取整。 Math.ceil(x)  //x必需是一个数值
+	* 向下取整：floor() 方法可对一个数进行向下取整。Math.floor(x)
+	* 四舍五入：round() 方法可把一个数字四舍五入为最接近的整数。Math.round(x)
+	* 随机数 ：random() 方法可返回介于 0 ~ 1（大于或等于 0 但小于 1 )之间的一个随机数。Math.random();
+	* Array 数组对象
+	```
+	数组对象是一个对象的集合，里边的对象可以是不同类型的。数组的每一个成员对象都有一个“下标”，用来表示它在数组中的位置，是从零开始的
+	数组定义的方法：
+	1. 定义了一个空数组:
+	var  数组名= new Array();
+	2. 定义时指定有n个空元素的数组：
+	var 数组名 =new Array(n);
+	3.定义数组的时候，直接初始化数据：
+	var  数组名 = [<元素1>, <元素2>, <元素3>...];
+	我们定义myArray数组，并赋值，代码如下：
+	var myArray = [2, 8, 6]; 
+	说明：定义了一个数组 myArray，里边的元素是：myArray[0] = 2; myArray[1] = 8; myArray[2] = 6。
+	数组元素使用：
+	数组名[下标] = 值;
+	注意: 数组的下标用方括号括起来，从0开始。
+	数组属性：
+	length 用法：<数组对象>.length；返回：数组的长度，即数组里有多少个元素。它等于数组里最后一个元素的下标加一。
+	```
+	数组方法：
+	<img src="images/16.png"/>
+	
+	* 数组连接concat()
+	```javascript
+	//concat() 方法用于连接两个或多个数组。此方法返回一个新数组，不改变原来的数组。arrayObject.concat(array1,array2,...,arrayN)
+	<script type="text/javascript">
+	    var myarr1= new Array("010")
+	    var myarr2= new Array("-","84697581");
+	   document.write(myarr1.concat(myarr2));//010,-,84697581
+	</script>
+	```
+	* 指定分隔符连接数组元素join()
+	```
+	join()方法用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符进行分隔的。语法：arrayObject.join(分隔符)
+	```
+	* 颠倒数组元素顺序reverse()
+	```
+	reverse() 方法用于颠倒数组中元素的顺序。语法：arrayObject.reverse()
+	```
+	* 选定元素slice()
+	```
+	slice() 方法可从已有的数组中返回选定的元素。语法arrayObject.slice(start,end)
+	```
+	<img src="images/17.png"/>
+	* 数组排序sort()
+	```javascript
+	//sort()方法使数组中的元素按照一定的顺序排列。语法:arrayObject.sort(方法函数)
+	/*1.如果不指定<方法函数>，则按unicode码顺序排列。
+	2.如果指定<方法函数>，则按<方法函数>所指定的排序方法排序。
+	 myArray.sort(sortMethod);
+	  该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下： 
+	  若返回值<=-1，则表示 A 在排序后的序列中出现在 B 之前。
+	  若返回值>-1 && <1，则表示 A 和 B 具有相同的排序顺序。
+	  若返回值>=1，则表示 A 在排序后的序列中出现在 B 之后。
+	  */
+	 <script type="text/javascript">
+	  function sortNum(a,b) {
+	  return a - b;
+	 //升序，如降序，把“a - b”该成“b - a”
+	}
+	 var myarr = new Array("80","16","50","6","100","1");
+	  document.write(myarr + "<br>");
+	  document.write(myarr.sort(sortNum));
+	</script>
+	```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
