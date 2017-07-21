@@ -391,7 +391,7 @@
 	```html
 	//选中事件，当文本框或者文本域中的文字被选中时，触发onselect事件，同时调用的程序就会被执行。
 	//当选中文本框内的文字时，触发onselect 事件，并调用函数message()。
-	
+	<textarea name="summary" cols="60" rows="5" onselect="message()">请写入个人简介，不少于200字！</textarea>
 	```
 	
 	* 文本框内容改变事件（onchange）
@@ -399,7 +399,7 @@
 	```html
 	//通过改变文本框的内容来触发onchange事件，同时执行被调用的程序。
 	//当用户将文本框内的文字改变后，触发onchange事件。
-	
+	<textarea name="summary" cols="60" rows="5" onchange="message()">请写入个人简介，不少于200字！</textarea>
 	```
 	
 	* 加载事件（onload）
@@ -609,6 +609,7 @@
 	slice() 方法可从已有的数组中返回选定的元素。语法arrayObject.slice(start,end)
 	```
 	<img src="images/17.png"/>
+	
 	* 数组排序sort()
 	```javascript
 	//sort()方法使数组中的元素按照一定的顺序排列。语法:arrayObject.sort(方法函数)
