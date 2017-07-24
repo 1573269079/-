@@ -1344,7 +1344,7 @@
 	replaceChild 实现子节点(对象)的替换。返回被替换对象的引用。 
 	语法：node.replaceChild (newnode,oldnew ) 
 	参数：
-	newnode : 必需，用于替换 oldnew 的对象。 
+	newnode : 必需，用于替换 oldnew 的对象。     
 	oldnew : 必需，被 newnode 替换的对象。
 	<div><b id="oldnode">JavaScript</b>是一个很常用的技术，为网页添加动态效果。</div>
 	<a href="javascript:replaceMessage()"> 将加粗改为斜体</a>
