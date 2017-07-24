@@ -632,17 +632,731 @@
 	</script>
 	```
 
+9. window对象
 
+	>window对象是BOM的核心，window对象指当前的浏览器窗口。
+	
+	window对象方法：
+	
+	<img src="images/18.png">
+	
+	* javascript计时器
+	
+	<img src="images/19.png">
+	
+	* 计时器setInterval()
+	
+	```html
+	/*
+	在执行时,从载入页面后每隔指定的时间执行代码。
+	语法:setInterval(代码,交互时间);
+	参数说明：
+	1. 代码：要调用的函数或要执行的代码串。
+	2. 交互时间：周期性执行或调用表达式之间的时间间隔，以毫秒计（1s=1000ms）。
+	返回值:
+	一个可以传递给 clearInterval() 从而取消对"代码"的周期性执行的值。
+	调用函数格式(假设有一个clock()函数):
+	setInterval("clock()",1000)或setInterval(clock,1000)
+	*/
+	//我们设置一个计时器，每隔100毫秒调用clock()函数，并将时间显示出来，代码如下:
+	<!DOCTYPE HTML>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>计时器</title>
+		<script type="text/javascript">
+			var int=setInterval(clock, 100)
+			function clock(){
+			    var time=new Date();
+			    document.getElementById("clock").value = time;
+			}
+		</script>
+	</head>
+	<body>
+		<form>
+		    <input type="text" id="clock" size="50"  />
+		</form>
+	</body>
+	</html>
+	```
+	
+	* 取消计时器clearInterval()
+	
+	```html
+	/*
+	clearInterval() 方法可取消由 setInterval() 设置的交互时间。
+	语法：clearInterval(id_of_setInterval)
+	参数说明:
+	id_of_setInterval：由 setInterval() 返回的 ID 值。
+	*/
+	//每隔 100 毫秒调用 clock() 函数,并显示时间。当点击按钮时，停止时间,代码如下:
+	<!DOCTYPE HTML>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>计时器</title>
+	<script type="text/javascript">
+	   function clock(){
+	      var time=new Date();                     
+	      document.getElementById("clock").value = time;
+	   }
+	// 每隔100毫秒调用clock函数，并将返回值赋值给i
+	     var i=setInterval("clock()",100);
+	</script>
+	</head>
+	<body>
+	  <form>
+	    <input type="text" id="clock" size="50"  />
+	    <input type="button" value="Stop" onclick="clearInterval(i)"  />
+	  </form>
+	</body>
+	</html>
+	```
+	
+	* 计时器setTimeout()
+	
+	```html
+	/*
+	setTimeout()计时器，在载入后延迟指定时间后,去执行一次表达式,仅执行一次。
+	语法:setTimeout(代码,延迟时间);
+	参数说明：
+	1. 要调用的函数或要执行的代码串。
+	2. 延时时间：在执行代码前需等待的时间，以毫秒为单位（1s=1000ms)。
+	*/
+	//当我们打开网页3秒后，在弹出一个提示框，代码如下:
+	<!DOCTYPE HTML>
+	<html>
+	<head>
+		<script type="text/javascript">
+		    setTimeout("alert('Hello!')", 3000 );
+		</script>
+	</head>
+	<body>
+	</body>
+	</html>
+	当按钮start被点击时，setTimeout()调用函数，在5秒后弹出一个提示框。
+	<!DOCTYPE HTML>
+	<html>
+	<head>
+	<script type="text/javascript">
+		function tinfo(){
+		  var t=setTimeout("alert('Hello!')",5000);
+		 }
+	</script>
+	</head>
+	<body>
+	<form>
+	  <input type="button" value="start" onClick="tinfo()">
+	</form>
+	</body>
+	</html>
+	要创建一个运行于无穷循环中的计数器，我们需要编写一个函数来调用其自身。在下面的代码，当按钮被点击后，输入域便从0开始计数。
+	<!DOCTYPE HTML>
+	<html>
+	<head>
+	<script type="text/javascript">
+		var num=0;
+		function numCount(){
+			 document.getElementById('txt').value=num;
+			 num=num+1;
+			 setTimeout("numCount()",1000);
+		 }
+	</script>
+	</head>
+	<body>
+		<form>
+			<input type="text" id="txt" />
+			<input type="button" value="Start" onClick="numCount()" />
+		</form>
+	</body>
+	</html>
+	```
 
+	* 取消计时器clearTimeout()
+	
+	```html
+	/*
+	setTimeout()和clearTimeout()一起使用，停止计时器。
+	语法:clearTimeout(id_of_setTimeout)
+	参数说明:id_of_setTimeout：由 setTimeout() 返回的 ID 值。该值标识要取消的延迟执行代码块。
+	*/
+	//eg:
+	<!DOCTYPE HTML>
+	<html>
+	<head>
+	<script type="text/javascript">
+	  var num=0,i;
+	  function timedCount(){
+	    document.getElementById('txt').value=num;
+	    num=num+1;
+	    i=setTimeout(timedCount,1000);
+	  }
+	    setTimeout(timedCount,1000);
+	  function stopCount(){
+	    clearTimeout(i);
+	  }
+	</script>
+	</head>
+	<body>
+	  <form>
+	    <input type="text" id="txt">
+	    <input type="button" value="Stop" onClick="stopCount()">
+	  </form>
+	</body>
+	</html>
+	```
+	
+	* History 对象
+	
+	```
+	history对象记录了用户曾经浏览过的页面(URL)，并可以实现浏览器前进与后退相似导航的功能。
+	语法：window.history.[属性|方法]
+	window可以省略
+	```
+	
+	<table>
+	    <tr>
+	        <td colspan="2">history对象属性</td> 
+	   </tr>
+	    <tr>
+	        <td>属性</td>
+	        <td>描述</td>    
+	    </tr>
+	    <tr>
+	        <td>length</td>  
+	        <td>返回浏览器历史列表中的URL数量</td>   
+	    </tr>
+	    <tr>
+	        <td>使用length属性，当前窗口的浏览历史总长度</td>  
+	        <td>
+	        	var HL = window.history.length;
+	        </td>   
+	    </tr>
+	    <tr>
+	        <td colspan="2">history对象方法</td> 
+	   </tr>
+	    <tr>
+	        <td>方法</td>
+	        <td>描述</td>    
+	    </tr>
+	    <tr>
+	        <td>black()</td>  
+	        <td>加载history列表中的前一个URL</td>   
+	    </tr>
+	    <tr>
+	        <td>forward()</td>  
+	        <td>加载history列表中的下一个URL</td>   
+	    </tr>
+	    <tr>
+	        <td>go()</td>  
+	        <td>加载history列表中的某个具体的页面</td>   
+	    </tr>
+	</table>
 
+	* 返回前一个浏览页面
+	
+	```
+	back()方法，加载history列表中的前一个URL，语法：window.history.back() == window.history.go(-1)
+	```
+	
+	* 返回下一个浏览页面
+	
+	```
+	forward()方法，加载history列表中的下一个URL，语法：window.history.forward() == window.history.go(1)
+	```
+	
+	* 返回浏览历史中的其他页面
+	
+	```
+	go()方法，根据当前所处页面，加载history列表中的某个具体的页面，语法：window.history.go(number)；
+	```
+	参数：
+	<table>
+		<tr>
+			<td>number</td>
+			<td>参数说明</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>前一个，go(1)等价于forward()；返回当前页面之后浏览的第三个历史页面（window.history.go(3)）</td>
+		</tr>
+		<tr>
+			<td>()</td>
+			<td>当前页面</td>
+		</tr>
+		<tr>
+			<td>-1</td>
+			<td>后一个，go(-1)等价于back()；返回当前页面之前浏览过的第二个历史页面（window.history.go(-2)）</td>
+		</tr>
+		<tr>
+			<td>其他数值</td>
+			<td>要访问的URL在history的URL列表中的相对位置</td>
+		</tr>
+	</table>
+	
+	* location对象
+	
+	```
+	location用于获取或设置窗体的URL，并且可以用于解析URL，语法：location.[属性|方法]
+	```
+	location对象属性图：
+	
+	<img src="images/20.png"/>
+	
+	<table>
+		<tr>
+			<td colspan="2">location对象属性：</td>
+		</tr>
+		<tr>
+			<td>属性</td>
+			<td>描述</td>
+		</tr>
+		<tr>
+			<td>hash</td>
+			<td>设置或返回从(#)开始的URL（锚）</td>
+		</tr>
+		<tr>
+			<td>host</td>
+			<td>设置或返回主机名和当前URL的端口号</td>
+		</tr>
+		<tr>
+			<td>hostname</td>
+			<td>设置或返回当前URL主机名</td>
+		</tr>
+		<tr>
+			<td>href</td>
+			<td>设置或返回完整的URL</td>
+		</tr>
+		<tr>
+			<td>pathname</td>
+			<td>设置或返回当前URL的路径部分</td>
+		</tr>
+		<tr>
+			<td>port</td>
+			<td>设置或返回当前URL的端口号</td>
+		</tr>
+		<tr>
+			<td>protocol</td>
+			<td>设置或返回当前URL的协议</td>
+		</tr>
+		<tr>
+			<td>search</td>
+			<td>设置或返回从问号（？）开始的URL（查询部分）</td>
+		</tr>
+		<tr>
+			<td colspan="2">location对象方法：</td>
+		</tr>
+		<tr>
+			<td>属性</td>
+			<td>描述</td>
+		</tr>
+		<tr>
+			<td>assign()</td>
+			<td>加载新的文档</td>
+		</tr>
+		<tr>
+			<td>reload()</td>
+			<td>重新加载当前文档</td>
+		</tr>
+		<tr>
+			<td>replace()</td>
+			<td>用新的文档替换当前文档</td>
+		</tr>
+	</table>
+	
+	* Navigator对象  ：Navigator 对象包含有关浏览器的信息，通常用于检测浏览器与操作系统的版本。
 
+	<table>
+		<tr>
+			<td colspan="2">对象属性：</td>
+		</tr>
+		<tr>
+			<td>属性</td>
+			<td>描述</td>
+		</tr>
+		<tr>
+			<td>appCodeName</td>
+			<td>浏览器代码名字的字符串表示</td>
+		</tr>
+		<tr>
+			<td>appName</td>
+			<td>返回浏览器的名称</td>
+		</tr>
+		<tr>
+			<td>appVersion</td>
+			<td>返回浏览器的平台和版本信息</td>
+		</tr>
+		<tr>
+			<td>platform</td>
+			<td>返回运行浏览器的操作系统平台</td>
+		</tr>
+		<tr>
+			<td>userAgent</td>
+			<td>返回有客户机发送服务的user-agent头部的值</td>
+		</tr>
+	</table>
+	
+	```javascript
+	//查看浏览器的名称和版本，代码如下:
+	<script type="text/javascript">
+	   var browser=navigator.appName;
+	   var b_version=navigator.appVersion;
+	   document.write("Browser name"+browser);
+	   document.write("<br>");
+	   document.write("Browser version"+b_version);
+	</script>
+	```
+	
+	* userAgent
+	
+	```
+	返回用户代理头的字符串表示(就是包括浏览器版本信息等的字符串)
+	语法: navigator.userAgent
+	```
+	几种浏览的user_agent.，像360的兼容模式用的是IE、极速模式用的是chrom的内核。
+	
+	<img src="images/21.png">
+	
+	* screen对象：用于获取用户的屏幕信息；语法：window.screen.属性
+	
+	<table>
+		<tr>
+			<td colspan="2">对象属性：</td>
+		</tr>
+		<tr>
+			<td>属性</td>
+			<td>描述</td>
+		</tr>
+		<tr>
+			<td>avaiHeight</td>
+			<td>窗口可以使用的屏幕高度，单位像素</td>
+		</tr>
+		<tr>
+			<td>avaiWidth</td>
+			<td>窗口可以使用的屏幕宽度，单位像素</td>
+		</tr>
+		<tr>
+			<td>colorDepth</td>
+			<td>用户浏览器表示的颜色位数，通常为32位（每像素的位数）</td>
+		</tr>
+		<tr>
+			<td>pixelDepth</td>
+			<td>用户浏览器表示的颜色位数，通常为32位（每像素的位数）IE不支持此属性</td>
+		</tr>
+		<tr>
+			<td>height</td>
+			<td>屏幕的高度，单位像素</td>
+		</tr>
+		<tr>
+			<td>width</td>
+			<td>屏幕的宽度，单位像素</td>
+		</tr>
+	</table>	
+	
+	* 屏幕分辨率的高和宽
+	
+	```javascript
+	/*
+	window.screen 对象包含有关用户屏幕的信息。
+	1. screen.height 返回屏幕分辨率的高
+	2. screen.width 返回屏幕分辨率的宽
+	注意:
+	1.单位以像素计。
+	2. window.screen 对象在编写时可以不使用 window 这个前缀。
+	*/
+	//获取屏幕的高和宽:
+	<script type="text/javascript">
+	  document.write( "屏幕宽度："+screen.width+"px<br />" );
+	  document.write( "屏幕高度："+screen.height+"px<br />" );
+	</script>
+	```
+	
+	* 屏幕可用高和宽度
+	
+	```javascript
+	/*
+	1. screen.availWidth 属性返回访问者屏幕的宽度，以像素计，减去界面特性，比如任务栏。
+	2. screen.availHeight 属性返回访问者屏幕的高度，以像素计，减去界面特性，比如任务栏。
+	注意:不同系统的任务栏默认高度不一样，及任务栏的位置可在屏幕上下左右任何位置，所以有可能可用宽度和高度不一样。
+	*/
+	//获取屏幕的可用高和宽度：
+	<script type="text/javascript">
+	document.write("可用宽度：" + screen.availWidth);
+	document.write("可用高度：" + screen.availHeight);
+	</script>
+	//注意:根据屏幕的不同显示值不同。
+	```
 
+10. DOM对象，控制HTML元素
 
-
-
-
-
-
+	```
+	文档对象模型DOM（Document Object Model）定义访问和处理HTML文档的标准方法。DOM 将HTML文档呈现为带有元素、属性和文本的树结构（节点树）。
+	HTML文档可以说由节点构成的集合，DOM节点有:
+	1. 元素节点：上图中<html>、<body>、<p>等都是元素节点，即标签。
+	2. 文本节点:向用户展示的内容，如<li>...</li>中的JavaScript、DOM、CSS等文本。
+	3. 属性节点:元素属性，如<a>标签的链接属性href="http://www.xxxx.com"。
+	```
+	
+	<table>
+		<tr>
+			<td colspan="2">节点属性：</td>
+		</tr>
+		<tr>
+			<td>方法</td>
+			<td>说明</td>
+		</tr>
+		<tr>
+			<td>nodeName</td>
+			<td>返回一个字符串，其内容是给节点的名字</td>
+		</tr>
+		<tr>
+			<td>nodeType</td>
+			<td>返回一个整数，这个数值代表给定节点的类型</td>
+		</tr>
+		<tr>
+			<td>nodeValue</td>
+			<td>返回给定节点的当前值</td>
+		</tr>
+		<tr>
+			<td colspan="2">节点属性：</td>
+		</tr>
+		<tr>
+			<td>方法</td>
+			<td>说明</td>
+		</tr>
+		<tr>
+			<td>childNodes</td>
+			<td>返回一个数组，这个数组由给定元素节点的子节点构成</td>
+		</tr>
+		<tr>
+			<td>firstChild</td>
+			<td>返回第一个子节点</td>
+		</tr>
+		<tr>
+			<td>lastChild</td>
+			<td>返回最后一个子节点</td>
+		</tr>
+		<tr>
+			<td>parentNode</td>
+			<td>返回一个给定节点的父节点</td>
+		</tr>
+		<tr>
+			<td>nextSibling</td>
+			<td>返回给定节点的下一个子节点</td>
+		</tr>
+		<tr>
+			<td>previousSibling</td>
+			<td>返回返回给定节点的上一个子节点</td>
+		</tr>
+		<tr>
+			<td colspan="2">节点属性：</td>
+		</tr>
+		<tr>
+			<td>方法</td>
+			<td>说明</td>
+		</tr>
+		<tr>
+			<td>createElement(element)</td>
+			<td>创建一个新的元素节点</td>
+		</tr>
+		<tr>
+			<td>createTextNode()</td>
+			<td>创建一个包含着给定文本的新文本节点</td>
+		</tr>
+		<tr>
+			<td>appendChild()</td>
+			<td>指定节点的最后一个子节点列表之后添加一个新的子节点</td>
+		</tr>
+		<tr>
+			<td>insertBefore()</td>
+			<td>将一个给定节点插入到一个给定元素节点的给定子节点的前面</td>
+		</tr>
+		<tr>
+			<td>removeChild()</td>
+			<td>从一个给定元素中删除一个子节点</td>
+		</tr>
+		<tr>
+			<td>replaceChild</td>
+			<td>把一个给定父元素里的一个子节点替换为另外一个节点</td>
+		</tr>
+	</table>	
+	
+	* getElementsByName()方法
+	
+	```
+	返回带有指定名称的节点对象的集合。
+	语法：document.getElementsByName(name)
+	与getElementById() 方法不同的是，通过元素的 name 属性查询元素，而不是通过 id 属性。
+	注意:
+	1. 因为文档中的 name 属性可能不唯一，所有 getElementsByName() 方法返回的是元素的数组，而不是一个元素。
+	2. 和数组类似也有length属性，可以和访问数组一样的方法来访问，从0开始。
+	```
+	
+	* getElementsByTagName()方法
+	
+	```
+	返回带有指定标签名的节点对象的集合。返回元素的顺序是它们在文档中的顺序。
+	语法: document.getElementsByTagName(Tagname)
+	说明:
+	1. Tagname是标签的名称，如p、a、img等标签名。
+	2. 和数组类似也有length属性，可以和访问数组一样的方法来访问，所以从0开始。
+	```
+	
+	* 区别getElementByID,getElementsByName,getElementsByTagName
+	
+	```
+	以人来举例说明，人有能标识身份的身份证，有姓名，有类别(大人、小孩、老人)等。
+	1. ID 是一个人的身份证号码，是唯一的。所以通过getElementById获取的是指定的一个人。
+	2. Name 是他的名字，可以重复。所以通过getElementsByName获取名字相同的人集合。
+	3. TagName可看似某类，getElementsByTagName获取相同类的人集合。如获取小孩这类人，getElementsByTagName("小孩")。
+	把上面的例子转换到HTML中，如下:
+	<input type="checkbox" name="hobby" id="hobby1">  音乐
+	input标签就像人的类别。
+	name属性就像人的姓名。
+	id属性就像人的身份证。
+	```
+	
+	|方法|说明|获得|
+	|----|----|----|
+	|getElementByID|通过指定ID获得元素|一个|
+	|getElementsByName|通过元素名称name属性获得元素|一组|
+	|getElementsByTagName|通过标签名称获得元素|一组|
+	
+	* getAttribute()方法
+	
+	```
+	通过元素节点的属性名称获取属性的值。
+	语法： elementNode.getAttribute(name)
+	说明:
+	1. elementNode：使用getElementById()、getElementsByTagName()等方法，获取到的元素节点。
+	2. name：要想查询的元素节点的属性名字
+	```
+	
+	* setAttribute()方法
+	```
+	setAttribute() 方法增加一个指定名称和值的新属性，或者把一个现有的属性设定为指定的值。
+	语法： elementNode.setAttribute(name,value)
+	说明：
+	1.name: 要设置的属性名。
+	2.value: 要设置的属性值。
+	注意：
+	1.把指定的属性设置为指定的值。如果不存在具有指定名称的属性，该方法将创建一个新属性。
+	2.类似于getAttribute()方法，setAttribute()方法只能通过元素节点对象调用的函数。
+	```
+	
+	* 节点属性
+	
+	```
+	在文档对象模型 (DOM) 中，每个节点都是一个对象。DOM 节点有三个重要的属性 ：
+	1. nodeName : 节点的名称
+	2. nodeValue ：节点的值
+	3. nodeType ：节点的类型
+	一、nodeName 属性: 节点的名称，是只读的。
+	1. 元素节点的 nodeName 与标签名相同
+	2. 属性节点的 nodeName 是属性的名称
+	3. 文本节点的 nodeName 永远是 #text
+	4. 文档节点的 nodeName 永远是 #document
+	二、nodeValue 属性：节点的值
+	1. 元素节点的 nodeValue 是 undefined 或 null
+	2. 文本节点的 nodeValue 是文本自身
+	3. 属性节点的 nodeValue 是属性的值
+	三、nodeType 属性: 节点的类型，是只读的。以下常用的几种结点类型:
+	元素类型    节点类型
+	  元素          1
+	  属性          2
+	  文本          3
+	  注释          8
+	  文档          9
+	```
+	
+	* 访问子节点childNodes
+	
+	```
+	访问选定元素节点下的所有子节点的列表，返回的值可以看作是一个数组，他具有length属性。
+	语法： elementNode.childNodes
+	注意： 如果选定的节点没有子节点，则该属性返回不包含节点的 NodeList。
+	```
+	<img src="images/21.png"/>
+	
+	* 访问子节点的第一和最后项
+	```
+	一、firstChild 属性返回‘childNodes’数组的第一个子节点。如果选定的节点没有子节点，则该属性返回 NULL。
+	语法： node.firstChild
+	说明：与elementNode.childNodes[0]是同样的效果。 
+	二、 lastChild 属性返回‘childNodes’数组的最后一个子节点。如果选定的节点没有子节点，则该属性返回 NULL。
+	语法： node.lastChild
+	说明：与elementNode.childNodes[elementNode.childNodes.length-1]是同样的效果。 
+	注意: Internet Explorer 会忽略节点之间生成的空白文本节点，而其它浏览器不会。我们可以通过检测节点类型，过滤子节点。
+	```
+	
+	* 访问父节点parentNode
+	
+	```html
+	//获取指定节点的父节点
+	//语法：elementNode.parentNode
+	//eg:获取 P 节点的父节点
+	<div id="text">
+	  <p id="con"> parentNode 获取指点节点的父节点</p>
+	</div> 
+	<script type="text/javascript">
+	  var mynode= document.getElementById("con");
+	  document.write(mynode.parentNode.nodeName);
+	</script>
+	```
+	
+	* 访问兄弟节点
+	```
+	1. nextSibling 属性可返回某个节点之后紧跟的节点（处于同一树层级中）。
+	语法：nodeObject.nextSibling
+	说明：如果无此节点，则该属性返回 null。
+	2. previousSibling 属性可返回某个节点之前紧跟的节点（处于同一树层级中）。
+	语法： nodeObject.previousSibling  
+	说明：如果无此节点，则该属性返回 null。
+	注意: 两个属性获取的是节点。Internet Explorer 会忽略节点间生成的空白文本节点（例如，换行符号），而其它浏览器不会忽略。
+	解决问题方法: 判断节点nodeType是否为1, 如是为元素节点，跳过。
+	```
+	
+	* 插入节点appendChild()
+	```
+	在指定节点的最后一个子节点列表之后添加一个新的子节点。
+	语法:appendChild(newnode)
+	参数:newnode：指定追加的节点。
+	```
+	
+	* 插入节点insertBefore()
+	```
+	insertBefore() 方法可在已有的子节点前插入一个新的子节点。
+	语法:insertBefore(newnode,node);
+	参数:
+	newnode: 要插入的新节点。
+	node: 指定此节点前插入节点。   --->  node也可以改为: x.childNodes[0]; 
+	```
+	
+	* 删除节点removeChild()
+	```
+	removeChild() 方法从子节点列表中删除某个节点。如删除成功，此方法可返回被删除的节点，如失败，则返回 NULL。
+	语法:nodeObject.removeChild(node)
+	参数:node ：必需，指定需要删除的节点。
+	```
+	
+	* 替换元素节点replaceChild()
+	```html
+	replaceChild 实现子节点(对象)的替换。返回被替换对象的引用。 
+	语法：node.replaceChild (newnode,oldnew ) 
+	参数：
+	newnode : 必需，用于替换 oldnew 的对象。 
+	oldnew : 必需，被 newnode 替换的对象。
+	<div><b id="oldnode">JavaScript</b>是一个很常用的技术，为网页添加动态效果。</div>
+	<a href="javascript:replaceMessage()"> 将加粗改为斜体</a>
+	<script type="text/javascript">
+	      function replaceMessage(){
+	          var b = document.getElementById("oldnode");
+			   var i = document.createElement("i");
+			   i.innerHTML = b.innerHTML;
+			   b.parentNode.replaceChild(i,b)
+	       }     
+	  </script>
+	```
 
 
 
