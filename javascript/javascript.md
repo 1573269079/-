@@ -559,7 +559,7 @@
 	```
 	* Math 对象
 	
-	<img src="images/14.png"/><img src="images/15.png"/>
+	<img src="images/13.png"/> <img src="images/15.png"/>
 	
 	* 向上取整: ceil() 方法可对一个数进行向上取整。 Math.ceil(x)  //x必需是一个数值
 	* 向下取整：floor() 方法可对一个数进行向下取整。Math.floor(x)
