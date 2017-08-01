@@ -422,7 +422,7 @@
 	```
 	定义一个时间对象 :
 	var Udate=new Date(); 
-	注意:使用关键字new，Date()的首字母必须大写。 
+	注意:使用关键字new，Date()的首字母必须大写。  
 	```
 	<img src="images/12.png"/>
 	
