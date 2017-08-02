@@ -319,7 +319,7 @@ var browser = {
             iPhone: u.indexOf('iPhone') > -1 , //iPhone 
             iPad: u.indexOf('iPad') > -1, //iPad 
             webApp: u.indexOf('Safari') > -1 //Safari 
-        }; 
+        };  
     }
 } 
 if (browser.versions.mobile() || browser.versions.ios() || browser.versions.android() || browser.versions.iPhone() || browser.versions.iPad()) { 
