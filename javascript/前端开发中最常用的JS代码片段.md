@@ -1,3 +1,67 @@
+### 跨浏览器事件
+
+```javascript
+//跨浏览器添加事件
+function addEvent(obj,type,fn){
+    if(obj.addEventListener){
+        obj.addEventListener(type,fn,false);
+    }else if(obj.attachEvent){//IE
+        obj.attchEvent('on'+type,fn);
+    }
+}
+
+//跨浏览器移除事件
+function removeEvent(obj,type,fn){
+    if(obj.removeEventListener){
+        obj.removeEventListener(type,fn,false);
+    }else if(obj.detachEvent){//兼容IE
+        obj.detachEvent('on'+type,fn);
+    }
+}
+
+//跨浏览器阻止默认行为
+function preDef(ev){
+    var e = ev || window.event;
+    if(e.preventDefault){
+        e.preventDefault();
+    }else{
+        e.returnValue =false;
+    }
+}
+
+//跨浏览器获取目标对象
+function getTarget(ev){
+    if(ev.target){//w3c
+        return ev.target;
+    }else if(window.event.srcElement){//IE
+        return window.event.srcElement;
+    }
+}
+
+//跨浏览器获取滚动条位置，sp == scroll position
+function getSP(){
+    return{
+        top: document.documentElement.scrollTop || document.body.scrollTop,
+        left : document.documentElement.scrollLeft || document.body.scrollLeft;
+    }
+}
+
+//跨浏览器获取可视窗口大小
+function  getWindow () {
+	if(typeof window.innerWidth !='undefined') {
+		return{
+			width : window.innerWidth,
+			height : window.innerHeight
+		}
+	} else{
+		return {
+			width : document.documentElement.clientWidth,
+			height : document.documentElement.clientHeight
+		}
+	}
+},
+```
+
 ### HTML5 DOM 选择器
 
 ```javascript
@@ -227,6 +291,17 @@ $('#txt').on('keyup', function () {
 });
 ```
 
+### 在字符串中查找子字符串
+
+```javascript
+<script type="text/javascript">
+    var test = 'Welcome to my blog!';
+    var value = 'blog';
+    var subValue = test.indexOf(value);
+    console.log(subValue);//14,子字符串的索引
+</script>
+```
+
 ### js判断是否移动端及浏览器内核
 
 ```javascript
@@ -250,6 +325,232 @@ var browser = {
 if (browser.versions.mobile() || browser.versions.ios() || browser.versions.android() || browser.versions.iPhone() || browser.versions.iPad()) { 
     alert('移动端'); 
 }
+```
+
+### js对象冒充
+
+```javascript
+<script type="text/javascript">
+    function Person(name , age){
+        this.name = name ;
+        this.age = age ;
+        this.say = function (){
+            return "name : "+ this.name + " age: "+this.age ;
+        } ;
+    }
+    var o = new Object() ;//可以简化为Object()
+    Person.call(o , "zhangsan" , 20) ;
+    console.log(o.say() );//name : zhangsan age: 20 
+</script>
+```
+
+### js 异步加载和同步加载
+
+```javascript
+//异步加载也叫非阻塞模式加载，浏览器在下载js的同时，同时还会执行后续的页面处理。
+//在script标签内，用js创建一个script元素并插入到document中，这种就是异步加载js文件了：
+(function() {     
+    var s = document.createElement('script');    
+    s.type = 'text/javascript';     
+    s.async = true;    
+    s.src = 'http://yourdomain.com/script.js';    
+    var x = document.getElementsByTagName('script')[0];    
+     x.parentNode.insertBefore(s, x); 
+})();
+```
+
+### 同步加载
+
+```
+平常默认用的都是同步加载。如：
+<script src="http://yourdomain.com/script.js"></script>
+同步模式又称阻塞模式，会阻止流览器的后续处理。停止了后续的文件的解析，执行，如图像的渲染。浏览器之所以会采用同步模式，是因为加载的js文件中有对dom的操作，重定向，输出document等默认行为，所以同步才是最安全的。
+通常会把要加载的js放到body结束标签之前，使得js可在页面最后加载，尽量减少阻塞页面的渲染。这样可以先让页面显示出来。
+同步加载流程是瀑布模型，异步加载流程是并发模型。
+```
+
+### js获取屏幕坐标
+
+```javascript
+//获取鼠标坐标
+<script type="text/javascript">
+    function mousePosition(ev){
+        if(ev.pageX || ev.pageY){
+            return {x:ev.pageX, y:ev.pageY};
+        }
+        return {
+            x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+            y:ev.clientY + document.body.scrollTop - document.body.clientTop
+        };
+    }
+    function mouseMove(ev){
+        ev = ev || window.event;
+        var mousePos = mousePosition(ev);
+        document.getElementById('xxx').value = mousePos.x;
+        document.getElementById('yyy').value = mousePos.y;
+    }
+    document.onmousemove = mouseMove;
+</script>
+X:<input id="xxx" type="text"> Y:<input id="yyy" type="text">
+
+/*
+ * documentElement 属性可返回文档的根节点。
+ * scrollTop() 为滚动条向下移动的距离
+ * document.documentElement.scrollTop 指的是滚动条的垂直坐标
+ * document.documentElement.clientHeight 指的是浏览器可见区域高度
+ */
+```
+
+##### IE
+
+```
+document.body.clientWidth ==> BODY对象宽度
+document.body.clientHeight ==> BODY对象高度
+document.documentElement.clientWidth ==> 可见区域宽度
+document.documentElement.clientHeight ==> 可见区域高度
+```
+
+##### Firefox
+
+```
+document.documentElement.scrollHeight ==> 浏览器所有内容高度
+document.body.scrollHeight ==> 浏览器所有内容高度
+document.documentElement.scrollTop ==> 浏览器滚动部分高度
+document.body.scrollTop ==>始终为0
+document.documentElement.clientHeight ==>浏览器可视部分高度
+document.body.clientHeight ==> 浏览器所有内容高度
+```
+
+##### Chrome
+
+```
+document.documentElement.scrollHeight ==> 浏览器所有内容高度
+document.body.scrollHeight ==> 浏览器所有内容高度
+document.documentElement.scrollTop==> 始终为0
+document.body.scrollTop==>浏览器滚动部分高度
+document.documentElement.clientHeight ==> 浏览器可视部分高度
+document.body.clientHeight ==> 浏览器所有内容高度
+```
+
+##### PageX和clientX
+
+```
+PageX:鼠标在页面上的位置,从页面左上角开始,即是以页面为参考点,不随滑动条移动而变化
+clientX:鼠标在页面上可视区域的位置,从浏览器可视区域左上角开始,即是以浏览器滑动条此刻的滑动到的位置为参考点,随滑动条移动 而变化.
+PageX只有FF特有,IE则没有这个，所以在IE下使用这个：
+PageY=clientY+scrollTop-clientTop;(只讨论Y轴,X轴同理,下同)
+scrollTop代表的是被浏览器滑动条滚过的长度
+offsetX:IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder`,可能出现负值
+chrome和safari 完全支持所有属性
+```
+
+### js拖拽效果
+
+```javascript
+<style type="text/css">
+    #login{
+        height: 100px;
+        width: 100px;
+        border: 1px solid black;
+        position: relative;
+        top:200px;
+        left: 200px;
+        background: red;
+    }
+</style>
+//offsetTop 返回的是数字，而 style.top 返回的是字符串，除了数字外还带有单位：px。
+```
+
+### js循环遍历数组
+
+```javascript
+<script>  
+   //循环遍历数组  
+   var animals = ["cat",'dog','human','whale','seal'];  
+   var animalString = "";  
+   for(var i = 0;i<animals.length;i++){  
+       animalString += animals[i] + " ";  
+   }  
+   alert(animalString);  //输出数组里的每个项
+</script> 
+```
+
+##### 遍历二维数组
+
+```javascript
+<script> 
+	 var arr=[[0,0,0,0,0,0],[0,0,1,0,0,0],[0,2,0,3,0,0],[0,0,0,0,0,0]]; 
+	 for(var i=0;i<arr.length;i++){ 
+	 //遍历每一个具体的值 
+	 for(var j=0;j<arr[i].length;j++){ 
+	 document.writeln(arr[i][j]+" "); 
+	 } 
+	 document.writeln("<br/>"); 
+	 } 
+</script>
+```
+
+##### 排序数组
+
+```javascript
+var fruits = ['banana','apple','orange','strawberry'];
+console.log(fruits.sort());//Array [ "apple", "banana", "orange", "strawberry" ]
+var num = [32,43,2,5,-23,0,4];
+console.log(num.sort());//Array [ -23, 0, 2, 32, 4, 43, 5 ]
+//Array对象的sort方法会按照字母顺序来排序数组元素。对于数字，是按照字符编码的顺序进行排序
+function compare(a,b){
+    return a-b;
+}
+var num = [32,43,2,5,-23,0,4];
+console.log(num.sort(compare));//Array [ -23, 0, 2, 4, 5, 32, 43 ] 
+```
+
+### js判断传入参数是否为质数
+
+```javascript
+function fn(input) {
+  input = parseInt(input,10);
+  return isPrime(input) ? 'is prime' : 'not prime';
+}
+ 
+function isPrime(input) {
+  if (input < 2) {
+    return false;
+  } else {
+    for (var i = 2; i <= Math.sqrt(input); i++) {
+      if (input % i == 0) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+```
+
+### js判断字符串出现最多的字符，并统计次数
+
+```javascript
+//js实现一个函数，来判断一个字符串出现次数最多的字符，并统计这个次数
+function countStr(str){
+    var obj = {};
+    for(var i = 0, l = str.length,k; i < l ;i++){ k = str.charAt(i); if(obj[k]){ obj[k]++; }else{ obj[k] = 1; } } var m = 0,i=null; for(var k in obj){ if(obj[k] > m){
+            m = obj[k];
+            i = k;
+        }
+    }
+    return i + ':' + m;
+}
+```
+
+### 阻止表单重复提交
+
+```javascript
+//有两种方法可以解决：一是提交之后，立刻禁用点击按钮；第二种就是提交之后取消后续的表单提交操作。
+document.getElementById("btn").disabled = true;//第一次提交后，将按钮禁用
+//这种方式只能用于通过提交按钮防止重复提交，还可以使用如下方式：
+var flag = false;//设置一个监听变量
+if(flag ==true)return;//退出事件
+flag = true;//表示提交过一次了
 ```
 
 ### getBoundingClientRect() 获取元素位置
@@ -277,3 +578,4 @@ function fullscreen(element) {
 }
 fullscreen(document.documentElement);
 ```
+
