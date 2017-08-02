@@ -62,7 +62,7 @@ function  getWindow () {
 },
 ```
 
-### HTML5 DOM 选择器
+### HTML5 DOM 选择器   
 
 ```javascript
 // querySelector() 返回匹配到的第一个元素
