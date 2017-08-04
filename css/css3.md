@@ -77,7 +77,7 @@
 	```css
 	CSS3 Gradient 分为线性渐变(linear)和径向渐变(radial)。
 	 background-image:linear-gradient(to top left,red,orange,yellow,green,blue,pink,indigo,violet);
-						渐变类型                       渐变方向                 表示颜色的起点和结束点，可以有两个至多个色值
+			   渐变类型          渐变方向                 表示颜色的起点和结束点，可以有两个至多个色值
 	``` 
 	<table>
 		<tr>
