@@ -557,3 +557,352 @@
 	改变两个或者多个css属性的transition效果时，只要把几个transition的声明串在一起，用逗号（“，”）隔开，然后各自可以有各自不同的延续时间和其时间的速率变换方式。但需要值得注意的一点：第一个时间的值为 transition-duration，第二个为transition-delay。
 	eg:a{ transition: background 0.8s ease-in 0.3,color 0.6s ease-out 0.3;}
 	```
+
+11. Keyframes介绍
+
+	```css
+	/*
+	Keyframes被称为关键帧，其类似于Flash中的关键帧。
+	在CSS3中其主要以“@keyframes”开头，后面紧跟着是动画名称加上一对花括号“{…}”，括号中就是一些不同时间段样式规则。
+	*/
+	@keyframes changecolor{
+	  0%{
+	   background: red;
+	  }
+	  100%{
+	    background: green;
+	  }
+	}
+	/*
+	 * 在一个“@keyframes”中的样式规则可以由多个百分比构成的，如在“0%”到“100%”之间创建更多个百分比，分别给每个百分比中给需要有动画效果的元素加上不同的样式，从而达到一种在不断变化的效果。
+	 * 在@keyframes中定义动画名称时，其中0%和100%还可以使用关键词from和to来代表，其中0%对应的是from，100%对应的是to。
+	 * Chrome 和 Safari 需要前缀 -webkit-；Foxfire 需要前缀 -moz-。
+	 */
+	```
+	
+12. CSS3中调用动画
+
+	```
+	animation-name属性主要是用来调用 @keyframes 定义好的动画。
+	animation-name 调用的动画名需要和“@keyframes”定义的动画名称完全一致（区分大小写），如果不一致将不具有任何动画效果。
+	语法：animation-name: none | IDENT[,none|DENT]*;
+	1、IDENT是由 @keyframes 创建的动画名，上面已经讲过了（animation-name 调用的动画名需要和“@keyframes”定义的动画名称完全一致）；
+	2、none为默认值，当值为 none 时，将没有任何动画效果,这可以用于覆盖任何动画。
+	```
+	
+13. CSS3中设置动画播放时间
+
+	```
+	animation-duration主要用来设置CSS3动画播放时间，其使用方法和transition-duration类似，是用来指定元素播放动画所持续的时间长，也就是完成从0%到100%一次动画所需时间。单位：S秒
+	语法规则:animation-duration: <time>[,<time>]*
+	取值<time>为数值，单位为秒，其默认值为“0”，这意味着动画周期为“0”，也就是没有动画效果（如果值为负值会被视为“0”）。
+	```
+	
+14. CSS3中设置动画播放方式
+
+	```
+	animation-timing-function属性主要用来设置动画播放方式。主要让元素根据时间的推进来改变属性值的变换速率，简单点说就是动画的播放方式。
+	语法规则：animation-timing-function:ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(<number>, <number>, <number>, <number>) [, ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(<number>, <number>, <number>, <number>)]*
+	它和transition中的transition-timing-function一样，具有以下几种变换方式：ease,ease-in,ease-in-out,ease-out,linear和cubic-bezier。对应功如下：
+	```
+	<img src="images/2.png" />
+	
+15. CSS3中设置动画开始播放的时间
+
+	```
+	animation-delay属性用来定义动画开始播放的时间，用来触发动画播放的时间点。和transition-delay属性一样，用于定义在浏览器开始执行动画之前等待的时间。
+	语法规则：animation-delay:<time>[,<time>]*
+	```
+	
+16. CSS3中设置动画播放次数
+
+	```
+	animation-iteration-count属性主要用来定义动画的播放次数。
+	语法规则：animation-iteration-count: infinite | <number> [, infinite | <number>]*
+	1、其值通常为整数，但也可以使用带有小数的数字，其默认值为1，这意味着动画将从开始到结束只播放一次。
+	2、如果取值为infinite，动画将会无限次的播放。
+	```
+	
+17. CSS3中设置动画播放方向
+
+	```
+	animation-direction属性主要用来设置动画播放方向，其语法规则如下：
+	animation-direction:normal | alternate [, normal | alternate]*
+	其主要有两个值：normal、alternate
+	1、normal是默认值，如果设置为normal时，动画的每次循环都是向前播放；
+	2、另一个值是alternate，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。
+	```
+	
+18. CSS3中设置动画的播放状态
+
+	```
+	animation-play-state属性主要用来控制元素动画的播放状态。
+	参数：主要有两个值：running和paused。
+	其中running是其默认值，主要作用就是类似于音乐播放器一样，可以通过paused将正在播放的动画停下来，也可以通过running将暂停的动画重新播放，
+	这里的重新播放不一定是从元素动画的开始播放，而是从暂停的那个位置开始播放。另外如果暂停了动画的播放，元素的样式将回到最原始设置状态。
+	```
+	
+19. CSS3中设置动画时间外属性
+
+	```
+	animation-fill-mode属性定义在动画开始之前和结束之后发生的操作。
+	主要具有四个属性值：none、forwards、backwords和both。
+	其四个属性值对应效果如下：
+	```
+	
+	|属性值|效果|
+	|----|----|
+	|none|默认值，表示动画将按预期进行和结束，在动画完成其最后一帧时，动画会反转到初始帧处|
+	|forwards|表示动画在结束后继续应用最后的关键帧的位置|
+	|backwards|会在向元素应用动画样式时迅速应用动画的初始帧|
+	|both|元素动画同时具有forwards和backwards效果|
+
+### 布局样式相关
+
+1. 多列布局——Columns
+
+	```
+	语法：columns：`<column-width>` || `<column-count>`
+	参数说明:
+	<column-width>主要用来定义多列中每列的宽度
+	<column-count>主要用来定义多列中的列数
+	```
+	
+2. 多列布局——column-width
+
+	```
+	column-width的使用和CSS中的width属性一样，不过不同的是，column-width属性在定义元素列宽的时候，既可以单独使用，也可以和多列属性中其他属性配合使用。
+	基本语法：column-width: auto | <length>
+	属性值说明：
+	auto：column-width设置值为auto或者没有显式的设置值时，元素多列的列宽将由其他属性来决定，比如前面的示例就是由列数column-count来决定。
+	<length>:使用固定值来设置元素列的宽度，其主要是由数值和长度单位组成，不过其值只能是正值，不能为负值。
+	```
+	
+3. 多列布局——column-count
+
+	```
+	column-count属性主要用来给元素指定想要的列数和允许的最大列数。
+	语法规则：column-count：auto | <integer>
+	属性值说明：
+	auto：此值为column-count的默认值，表示元素只有一列，其主要依靠浏览器计算自动设置。
+	<integer>：此值为正整数值，主要用来定义元素的列数，取值为大于0的整数，负值无效。
+	```
+	
+4. 列间距column-gap
+
+	```
+	column-gap主要用来设置列与列之间的间距
+	语法规则:column-gap: normal || <length>
+	属性值说明:
+	normal :默认值，默值为1em（如果你的字号是px，其默认值为你的font-size值）。
+	<length>:此值用来设置列与列之间的距离，其可以使用px,em单位的任何整数值，但不能是负值。
+	```
+	
+5. 列表边框column-rule
+
+	```
+	column-rule主要是用来定义列与列之间的边框宽度、边框样式和边框颜色。
+	类似于常用的border属性,但column-rule是不占用任何空间位置的，在列与列之间改变其宽度不会改变任何列的位置。
+	语法规则：column-rule:<column-rule-width>|<column-rule-style>|<column-rule-color>
+	属性值说明：
+	column-rule-width：类似于border-width属性，主要用来定义列边框的宽度，其默认值为“medium”，column-rule-width属性接受任意浮点数，但不接收负值。但也像border-width属性一样，可以使用关键词：medium、thick和thin。
+	column-rule-style：类似于border-style属性，主要用来定义列边框样式，其默认值为“none”。column-rule-style属性值与border-style属值相同，包括none、hidden、dotted、dashed、solid、double、groove、ridge、inset、outset。
+	column-rule-color：类似于border-color属性，主要用来定义列边框颜色，其默认值为前景色color的值，使用时相当于border-color。column-rule-color接受所有的颜色。如果不希望显示颜色，也可以将其设置为transparent(透明色)
+	```
+	
+6. 跨列设置column-span
+
+	```
+	column-span主要用来定义一个分列元素中的子元素能跨列多少。
+	column-width、column-count等属性能让一元素分成多列，不管里面元素如何排放顺序，他们都是从左向右的放置内容，但有时需要基中一段内容或一个标题不进行分列，也就是横跨所有列
+	属性的语法:column-span: none | all
+	属性值说明：
+	none：此值为column-span的默认值，表示不跨越任何列。
+	all：这个值跟none值刚好相反，表示的是元素跨越所有列，并定位在列的Ｚ轴之上。
+	```
+	
+7.  盒子模型
+
+	```
+	CSS中有一种基础设计模式叫盒模型，盒模型定义了Web页面中的元素中如何来解析。
+	CSS中每一个元素都是一个盒模型，包括html和body标签元素。
+	在盒模型中主要包括width、height、border、background、padding和margin这些属性，而且他们之间的层次关系可以相互影响。
+	1. W3C标准盒模型
+		外盒尺寸计算（元素空间尺寸）
+		element空间高度＝内容高度＋内距＋边框＋外距
+		element空间宽度＝内容宽度＋内距＋边框＋外距
+		内盒尺寸计算（元素大小）
+		element高度＝内容高度＋内距＋边框（height为内容高度）
+		element宽度＝内容宽度＋内距＋边框（width为内容宽度）
+	2.IE传统下盒模型（IE6以下，不包含IE6版本或”QuirksMode下IE5.5+”）
+		外盒尺寸计算（元素空间尺寸）
+		element空间高度＝内容高度＋外距（height包含了元素内容宽度、边框、内距）
+		element宽间宽度＝内容宽度＋外距（width包含了元素内容宽度、边框、内距）
+		内盒尺寸计算（元素大小）
+		element高度＝内容高度（height包含了元素内容宽度、边框、内距）
+		element宽度＝内容宽度（width包含了元素内容宽度、边框、内距）
+		
+	CSS3中新增加了box-sizing属性，能够事先定义盒模型的尺寸解析方式，其语法规则：box-sizing: content-box | border-box | inherit
+	属性值说明：
+	content-box：默认值，其让元素维持W3C的标准盒模型，也就是说元素的宽度和高度（width/height）等于元素边框宽度（border）加上元素内距（padding）加上元素内容宽度或高度（content width/ height），也就是element width/height = border + padding + content width / height
+	border-box：重新定义CSS2.1中盒模型组成的模式，让元素维持IE传统的盒模型（IE6以下版本和IE6-7怪异模式），也就是说元素的宽度或高度等于元素内容的宽度或高度。从上面盒模型介绍可知，这里的内容宽度或高度包含了元素的border、padding、内容的宽度或高度（此处的内容宽度或高度＝盒子的宽度或高度—边框—内距）。
+	inherit：使元素继承父元素的盒模型模式
+	```
+	
+8. 伸缩布局
+
+	```
+	CSS3引入了一种新的布局模式——Flexbox布局，即伸缩布局盒模型（Flexible Box），用来提供一个更加有效的方式制定、调整和分布一个容器里项目布局，即使它们的大小是未知或者动态的，这里简称为Flex。
+	Flexbox布局功能主要具有以下几点：
+	第一，屏幕和浏览器窗口大小发生改变也可以灵活调整布局；
+	第二，可以指定伸缩项目沿着主轴或侧轴按比例分配额外空间（伸缩容器额外空间），从而调整伸缩项目的大小；
+	第三，可以指定伸缩项目沿着主轴或侧轴将伸缩容器额外空间，分配到伸缩项目之前、之后或之间；
+	第四，可以指定如何将垂直于元素布局轴的额外空间分布到该元素的周围；
+	第五，可以控制元素在页面上的布局方向；
+	第六，可以按照不同于文档对象模型（DOM）所指定排序方式对屏幕上的元素重新排序。也就是说可以在浏览器渲染中不按照文档流先后顺序重排伸缩项目顺序。
+	
+	1. .创建一个flex容器
+	任何一个flexbox布局的第一步是需要创建一个flex容器。为此给元素设置display属性的值为flex。eg: .flexcontainer{ display: -webkit-flex; display: flex; }
+	2.Flex项目显示
+	Flex项目是Flex容器的子元素。他们沿着主要轴和横轴定位。默认的是沿着水平轴排列一行。你可以通过flex-direction来改变主轴方向修改为column，其默认值是row。
+	3.Flex项目列显示
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }
+	4.Flex项目移动到顶部
+	如何将flex项目移动到顶部，取决于主轴的方向。如果它是垂直的方向通过align-items设置；如果它是水平的方向通过justify-content设置。
+	.flexcontainer{ -webkit-flex-direction: column; flex-direction: column; -webkit-justify-content: flex-start; justify-content: flex-start; }
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-align-items: flex-start; align-items: flex-start; }
+	5.Flex项目移到左边
+	flex项目称动到左边或右边也取决于主轴的方向。如果flex-direction设置为row，设置justify-content控制方向；如果设置为column，设置align-items控制方向。
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-justify-content: flex-start; justify-content: flex-start; }
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; }
+	6.Flex项目移动右边
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-justify-content: flex-end; justify-content: flex-end; }
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-end; align-items: flex-end; }
+	7.水平垂直居中
+	在Flexbox容器中制作水平垂直居中是微不足道的。设置justify-content或者align-items为center。另外根据主轴的方向设置flex-direction为row或column。
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; }
+	.flexcontainer{ display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; }
+	8.Flex项目实现自动伸缩
+	可以定义一个flex项目，如何相对于flex容器实现自动的伸缩。需要给每个flex项目设置flex属性设置需要伸缩的值。
+	.bigitem{ -webkit-flex:200; flex:200; }  .smallitem{ -webkit-flex:100; flex:100; }
+	```
+	
+###  Media Queries 与Responsive 设计
+
+1. Media Queries——媒体类型
+
+	```
+	1. link方法
+	link方法引入媒体类型其实就是在<link>标签引用样式的时候，通过link标签中的media属性来指定不同的媒体类型。如下所示。
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+	2. @import方法
+	@import可以引用样式文件，同样也可以用来引用媒体类型。@import引入媒体类型主要有两种方式，一种是在样式中通过@import调用另一个样式文件；另一种方法是在<head></head>标签中的<style></style>中引入，但这种使用方法在IE6~7都不被支持，如样式文件中调用另一个样式文件时，就可以指定对应的媒体类型。
+	@importurl(reset.css) screen;   
+	@importurl(print.css) print;
+	在<head>中的<style>标签中引入媒体类型方法。
+	<head>
+	<style type="text/css">
+	    @importurl(style.css) all;
+	</style>
+	</head>
+	3. @media方法
+	@media是CSS3中新引进的一个特性，被称为媒体查询。在页面中也可以通过这个属性来引入媒体类型。@media引入媒体类型和@import有点类似也具有两方式。
+	（1）在样式文件中引用媒体类型：
+	@media screen {
+	   选择器{/*你的样式代码写在这里…*/}
+	}
+	（2）使用@media引入媒体类型的方式是在<head>标签中的<style>中引用。
+	<head>
+	<style type="text/css">
+	    @media screen{
+	    选择器{/*你的样式代码写在这里…*/}
+	}
+	</style>
+	</head>
+	```
+	
+2. Media Queries使用方法
+
+	```
+	1. 最大宽度max-width
+		“max-width”是媒体特性中最常用的一个特性，其意思是指媒体类型小于或等于指定的宽度时，样式生效。如：
+		@media screen and (max-width:480px){当屏幕小于或等于480px时,页面中的广告区块（.ads）都将被隐藏。
+		 .ads {
+		   display:none; 
+		  }
+		}
+	2.最小宽度min-width
+		“min-width”与“max-width”相反，指的是媒体类型大于或等于指定宽度时，样式生效。
+		@media screen and (min-width:900px){当屏幕大于或等于900px时，容器“.wrapper”的宽度为980px。
+		.wrapper{width: 980px;}
+		}
+	3.多个媒体特性使用
+		Media Queries可以使用关键词"and"将多个媒体特性结合在一起。也就是说，一个Media Query中可以包含0到多个表达式，表达式又可以包含0到多个关键字，以及一种媒体类型。
+		当屏幕在600px~900px之间时，body的背景色渲染为“#f5f5f5”，如下所示。
+		@media screen and (min-width:600px) and (max-width:900px){
+		  body {background-color:#f5f5f5;}
+		}
+	4.设备屏幕的输出宽度Device Width
+		在智能设备上，例如iPhone、iPad等，还可以根据屏幕设备的尺寸来设置相应的样式（或者调用相应的样式文件）。
+		对于屏幕设备同样可以使用“min/max”对应参数，如“min-device-width”或者“max-device-width”。
+		<link rel="stylesheet" media="screen and (max-device-width:480px)" href="iphone.css" />
+		上面的代码指的是“iphone.css”样式适用于最大设备宽度为480px，比如说iPhone上的显示，这里的“max-device-width”所指的是设备的实际分辨率，也就是指可视面积分辨率。
+	5. not关键词
+		使用关键词“not”是用来排除某种制定的媒体类型，也就是用来排除符合表达式的设备。换句话说，not关键词表示对后面的表达式执行取反操作，如：
+		@media not print and (max-width: 1200px){样式代码}
+		上面代码表示的是：样式代码将被使用在除打印设备和设备宽度小于1200px下所有设备中。
+	6.only关键词
+		only用来指定某种特定的媒体类型，可以用来排除不支持媒体查询的浏览器。其实only很多时候是用来对那些不支持Media Query但却支持Media Type的设备隐藏样式表的。其主要有：支持媒体特性的设备，正常调用样式，此时就当only不存在；表示不支持媒体特性但又支持媒体类型的设备，这样就会不读样式，因为其先会读取only而不是screen；另外不支持Media Queries的浏览器，不论是否支持only，样式都不会被采用。如
+		<linkrel="stylesheet" media="only screen and (max-device-width:240px)" href="android240.css" />
+	```
+	
+3. Responsive设计——meta标签
+
+	```
+	Responsive设计简单的称为RWD，是精心提供各种设备都能浏览网页的一种设计方法，RWD能让你的网页在不同的设备中展现不同的设计风格。”
+	在响应式设计中如果没有这个meta标签，响应式设计就是空谈。
+	使用方法:<meta name=”viewport” content=”” />
+	```
+	在content属性中主要包括以下属性值，用来处理可视区域。
+	<img src="images/3.png"/>
+	
+### 用户界面与其它重要属性
+
+1. 自由缩放属性resize
+
+	```
+	resize就是一个重要的属性，它允许用户通过拖动的方式来修改元素的尺寸来改变元素的大小。
+	语法:resize: none | both | horizontal | vertical | inherit
+	取值说明：
+	none:用户不能拖动元素修改尺寸大小。
+	both:用户可以拖动元素，同时修改元素的宽度和高度
+	horizontal:用户可以拖动元素，仅可以修改元素的宽度，但不能修改元素的高度。
+	vertical:用户可以拖动元素，仅可以修改元素的高度，但不能修改元素的宽度。
+	inherit:继承父元素的resize属性值。
+	```
+	
+2. CSS3外轮廓属性
+
+	```
+	外轮廓outline在页面中呈现的效果和边框border呈现的效果极其相似，但和元素边框border完全不同，外轮廓线不占用网页布局空间，
+	不一定是矩形，外轮廓是属于一种动态样式，只有元素获取到焦点或者被激活时呈现。
+	outline属性的基本语法：outline: ［outline-color］ || [outline-style] || [outline-width] || [outline-offset] || inherit
+	属性值说明：
+	outline-color：定义轮廓线的颜色，属性值为CSS中定义的颜色值。在实际应用中，可以将此参数省略，省略时此参数的默认值为黑色。
+	outline-style：定义轮廓线的样式，属性为CSS中定义线的样式。在实际应用中，可以将此参数省略，省略时此参数的默认值为none，省略后不对该轮廓线进行任何绘制。
+	outline-width：定义轮廓线的宽度，属性值可以为一个宽度值。在实际应用中，可以将此参数省略，省略时此参数的默认值为medium，表示绘制中等宽度的轮廓线。
+	outline-offset：定义轮廓边框的偏移位置的数值，此值可以取负数值。当此参数的值为正数值，表示轮廓边框向外偏离多少个像素；当此参数的值为负数值，表示轮廓边框向内偏移多少个像素。
+	inherit：元素继承父元素的outline效果。
+	```
+	
+3. CSS生成内容
+
+	```
+	通过CSS3的伪类“:before”，“:after”和CSS3的伪元素“::before”、“::after”来实现在Web中插入内容，其关键是依靠CSS3中的“content”属性来实现。不过这个属性对于img和input元素不起作用。
+	content配合CSS的伪类或者伪元素，一般可以做以下四件事情：
+	none:不生成任何内容
+	attr:插入标签属性值
+	url:使用指定的绝对或相对地址插入一个外部资源（图像，声频，视频或浏览器支持的其他任何资源）
+	string:插入字符串
+	```
