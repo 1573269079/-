@@ -1,6 +1,6 @@
 <a href="http://www.yangyunhe.me/2017/git-instructions-intro/">原文地址：http://www.yangyunhe.me/2017/git-instructions-intro/</a>
 
-###Git 常用命令速查
+### Git 常用命令速查
 
 |命令|说明|
 |----|----|
