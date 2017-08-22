@@ -389,10 +389,10 @@
 	<!--注意：jQuery是一个合集对象，所以通过children是匹配合集中每一给元素的第一级子元素-->
 	<script type="text/javascript">
 	//因为jQuery是合集对象，可能需要对这个合集对象进行一定的筛选，找出目标元素，所以允许传一个选择器的表达式
-    //找到所有class=div的元素
-    //找到其对应的子元素ul，然后筛选出最后一个，给边宽加上颜色
-        $('.div').children(':last').css('border', '3px solid blue')
-   </script>
+	//找到所有class=div的元素
+	//找到其对应的子元素ul，然后筛选出最后一个，给边宽加上颜色
+	$('.div').children(':last').css('border', '3px solid blue')
+	 </script>
 	```
 	
 17. jQuery遍历之find()方法
