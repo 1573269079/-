@@ -579,7 +579,7 @@ function fullscreen(element) {
 fullscreen(document.documentElement);
 ```
 
-### 禁止右键或者f12查看源代码
+### 禁止右键或者f12查看源代码  
 
 ```javascript
 function click(e) {
