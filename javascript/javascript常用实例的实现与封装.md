@@ -384,14 +384,14 @@
 
 ### 基础DOM操作
 
-	```javascript
+```javascript
 	//设置对象内容
 	jquery：$('#xxx').html('hello world');
 	现在：html(document.getElementById('xxx'),'hello world')
 	//获取对象内容
 	jquery：$('#xxx').html();
 	现在：html(document.getElementById('xxx'))
-	```
+```
 
 1. 检测对象是否有哪个类名
 
