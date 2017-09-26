@@ -384,14 +384,14 @@
 
 ### 基础DOM操作
 
-	```javascript
+```javascript
 	//设置对象内容
 	jquery：$('#xxx').html('hello world');
 	现在：html(document.getElementById('xxx'),'hello world')
 	//获取对象内容
 	jquery：$('#xxx').html();
 	现在：html(document.getElementById('xxx'))
-	```
+```
 
 1. 检测对象是否有哪个类名
 
@@ -399,7 +399,9 @@
 	function hasClass(obj,classStr){ 
 	    var arr=obj.className.split(/\s+/); //这个正则表达式是因为class可以有多个,判断是否包含 
 	    return (arr.indexOf(classStr)==-1)?false:true;
-	},
+	}
+	 var str = document.getElementById("xxx");
+	 hasClass(str,className)
 	```
 
 2. 添加类名
