@@ -278,7 +278,9 @@ alert(formatDate(nowDate));
 function getByteVal(val, max) {
     var returnValue = '';
     var byteValLen = 0;
-    for (var i = 0; i < val.length; i++) { if (val[i].match(/[^\x00-\xff]/ig) != null) byteValLen += 2; else byteValLen += 1; if (byteValLen > max) break;
+    for (var i = 0; i < val.length; i++) { 
+    	if (val[i].match(/[^\x00-\xff]/ig) != null) byteValLen += 2; 
+    	else byteValLen += 1; if (byteValLen > max) break;
         returnValue += val[i];
     }
     return returnValue;
@@ -533,7 +535,17 @@ function isPrime(input) {
 //js实现一个函数，来判断一个字符串出现次数最多的字符，并统计这个次数
 function countStr(str){
     var obj = {};
-    for(var i = 0, l = str.length,k; i < l ;i++){ k = str.charAt(i); if(obj[k]){ obj[k]++; }else{ obj[k] = 1; } } var m = 0,i=null; for(var k in obj){ if(obj[k] > m){
+    for(var i = 0, l = str.length,k; i < l ;i++){
+    	k = str.charAt(i); 
+    	if(obj[k]){
+    		obj[k]++; 
+    	}else{ 
+    		obj[k] = 1; 
+    	} 
+    } 
+    var m = 0,i=null; 
+    for(var k in obj){ 
+    	if(obj[k] > m){
             m = obj[k];
             i = k;
         }
