@@ -11,7 +11,7 @@
 		}
 		return true;
 	}
-	```
+	``` 
 	
 2. 为元素添加class
 
