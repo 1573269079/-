@@ -1,3 +1,14 @@
+### 手机类型判断
+
+```javascript
+var BrowserInfo = {
+	userAgent:navigator.userAgent.toLowerCase()
+	isAndroid:Boolean(navigator.userAgent.match(/android/ig)),
+	isIphone:Boolean(navigator.userAgent.match(/iphone|ipod/ig),
+	isIpad:Boolean(navigator.userAgent.match(/ipad/ig)),
+	isWeixin:Boolean(navigator.userAgent.match(/MicroMessenger/ig)),
+}
+```
 ### 字符串操作
 
 1. 去除字符串空格
