@@ -14,7 +14,7 @@ cmd-shift-b 只搜索从上次git commit后修改或者新增的文件
 （等价于上下左右）
 ctrl-p 前一行
 ctrl-n 后一行
-ctrl-f 前一个字符
+ctrl-f 前一个字符   
 ctrl-b 后一个字符
 
 alt-B, alt-left 移动到单词开始
